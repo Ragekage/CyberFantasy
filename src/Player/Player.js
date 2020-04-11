@@ -8,16 +8,34 @@ super()
 this.state = {
     PlayerStats:{
         Name: "Kade",
+        LVL: 1,
+        EXP: 0,
         STR: 0,
         INT: 0,
         STM: 0,
         ATK: 0,
         WATK: 0,
-        HLT: 0,    
+        HEALTH: 100,
+        CASH: 500,
+        expLimit: 0,   
+    },
+
+    Equipped:{
+        LHANDWEP: {},
+        RHANDWEP: {},
+        HANDS: {},
+        FEET: {},
+        LEGS: {},
+        CHEST: {},
+        HEAD: {}
     },
 
     givenPoints: 10,
 }
+}
+
+componentDidMount(){
+    this.calculateLevelUpExp(this.state.PlayerStats) 
 }
 
 plusStat = (area) => {
@@ -28,7 +46,7 @@ plusStat = (area) => {
     {
     stats[area] = stats[area] + 1
     points = points - 1
-    this.setState({PlayerStats: stats, givenPoints: points})
+    this.setState({givenPoints: points}, this.calculateBaseStats(stats))
     }
 }
 
@@ -40,8 +58,15 @@ minusStat = (area) => {
     {
     stats[area] = stats[area] - 1
     points = points + 1
-    this.setState({PlayerStats: stats, givenPoints: points})
+    this.setState({givenPoints: points}, this.calculateBaseStats(stats))
     }
+}
+
+calculateBaseStats = (stats) => {
+    stats.ATK = stats.STR * 2 + stats.INT * 0.25;
+    stats.HEALTH = 100 + stats.STM * 20 + stats.STR * 10 / 2;
+    stats.WATK = stats.INT * 2 + stats.STR * 0.25
+    this.setState({PlayerStats: stats})
 }
 
 plusMinus = (area) => {
@@ -58,9 +83,22 @@ plusMinus = (area) => {
         )
 }
 
+calculateLevelUpExp = (stats) => {
+    stats.expLimit = stats.LVL * 100
+    this.setState({PlayerStats: stats})
+}
+
+levelUp = () => {
+    var points = this.state.givenPoints
+    var stats = this.state.PlayerStats
+    stats.LVL = stats.LVL + 1;
+    points = points + 3
+    this.setState({givenPoints: points}, this.calculateLevelUpExp(stats))
+}
+
 render(){
     return(
-        <div>
+        <div style={{fontSize: "medium"}}>
         <div>
             <p>{this.state.PlayerStats.Name}</p>
             <p>{this.plusMinus("STR")}STR: {this.state.PlayerStats.STR}</p>
@@ -68,9 +106,13 @@ render(){
             <p>{this.plusMinus("STM")}STM: {this.state.PlayerStats.STM}</p>
         </div>
         <div>
-            <p>DMG MELEE:</p>
-            <p>DMG WEAPON:</p>
-            <p>HEALTH:</p>
+            <p>LEVEL: {this.state.PlayerStats.LVL}</p>
+            <p>EXP: {this.state.PlayerStats.EXP}/{this.state.PlayerStats.expLimit}</p>
+            <p>DMG MELEE: {this.state.PlayerStats.ATK}</p>
+            <p>DMG WEAPON: {this.state.PlayerStats.WATK}</p>
+            <p>HEALTH: {this.state.PlayerStats.HEALTH}</p>
+            <p>CASH: ¥{this.state.PlayerStats.CASH}</p>
+            <button onClick={() => this.levelUp()}>LVL UP</button>
         </div>
         </div>
     )
