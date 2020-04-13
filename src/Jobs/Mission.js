@@ -2,7 +2,17 @@ import React, { Component } from 'react';
 
 class Mission extends Component {
 
+constructor()
+{
+super()
 
+this.state = {
+    MissionStats: {
+        DIFFICULTY: "",
+        TYPE: "",
+    }
+}
+}
 
 
     render()
