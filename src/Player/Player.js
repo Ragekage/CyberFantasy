@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import axios from 'axios';
+// import axios from 'axios';
 
 class Player extends React.Component{
 
@@ -38,11 +38,11 @@ this.state = {
 
 componentDidMount(){
     this.calculateLevelUpExp(this.state.PlayerStats) 
-    axios.get('api/player')
-    .then(res => {
-        const player = res.data;
-        this.setState({player})
-    })
+    // axios.get('api/player/1' )
+    // .then(res => {
+    //     const player = res.data;
+    //     this.setState({player})
+    // })
 }
 
 testApiCall = async() => {
@@ -113,9 +113,9 @@ render(){
         <div style={{fontSize: "medium"}}>
         <div>
             <p>{this.state.PlayerStats.Name}</p>
-            <p>{this.plusMinus("STR")}STR: {this.state.PlayerStats.STR}</p>
-            <p>{this.plusMinus("INT")}INT: {this.state.PlayerStats.INT}</p>
-            <p>{this.plusMinus("STM")}STM: {this.state.PlayerStats.STM}</p>
+            {this.plusMinus("STR")}STR: {this.state.PlayerStats.STR}
+            {this.plusMinus("INT")}INT: {this.state.PlayerStats.INT}
+            {this.plusMinus("STM")}STM: {this.state.PlayerStats.STM}
         </div>
         <div>
             <p>LEVEL: {this.state.PlayerStats.LVL}</p>
