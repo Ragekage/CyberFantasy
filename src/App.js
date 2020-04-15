@@ -14,7 +14,7 @@ function App() {
     <Router>
     <div className="App-header">
         <Switch>
-        <Redirect exact from="/" to="/welcome" />
+        <Redirect exact from="/" to="/mainhub" />
         <Route path="/welcome">
           <LoginRegister/>
         </Route>
@@ -24,9 +24,9 @@ function App() {
         <Route path="/register">
           <Register/>
         </Route>
-        <PrivateRoute path="/mainhub">
+        <Route path="/mainhub">
           <MainHub/>
-        </PrivateRoute>
+        </Route>
         </Switch>
     </div>
     </Router>
