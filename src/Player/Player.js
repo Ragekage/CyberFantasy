@@ -1,25 +1,18 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {Card, CardBody, Button, Row, Col, Modal, ModalBody} from 'reactstrap'
+import Inventory from './Inventory';
+import characterImage from '../Images/Character1.png'
+import './PlayerStyles.css'
 // import axios from 'axios';
 
 class Player extends React.Component{
 
-constructor(){
-super()
+constructor(props){
+super(props)
 this.state = {
-    PlayerStats:{
-        Name: "Kade",
-        LVL: 1,
-        EXP: 0,
-        STR: 0,
-        INT: 0,
-        STM: 0,
-        ATK: 0,
-        WATK: 0,
-        HEALTH: 100,
-        CASH: 500,
-        expLimit: 0,   
-    },
+    PlayerStats: this.props.PlayerStats,   
+    
 
     Equipped:{
         LHANDWEP: {},
@@ -31,8 +24,10 @@ this.state = {
         HEAD: {}
     },
 
+    items: [],
     player: [],
     givenPoints: 10,
+    toggleModal: false,
 }
 }
 
@@ -57,7 +52,7 @@ plusStat = (area) => {
     {
     stats[area] = stats[area] + 1
     points = points - 1
-    this.setState({givenPoints: points}, this.calculateBaseStats(stats))
+    this.setState({givenPoints: points}, this.calculateBaseStats(stats, "plus"))
     }
 }
 
@@ -69,20 +64,25 @@ minusStat = (area) => {
     {
     stats[area] = stats[area] - 1
     points = points + 1
-    this.setState({givenPoints: points}, this.calculateBaseStats(stats))
+    this.setState({givenPoints: points}, this.calculateBaseStats(stats, "minus"))
     }
 }
 
-calculateBaseStats = (stats) => {
+calculateBaseStats = (stats, minusPlus) => {
+  
     stats.ATK = stats.STR * 2 + stats.INT * 0.25;
-    stats.HEALTH = 100 + stats.STM * 20 + stats.STR * 10 / 2;
+    stats.MAXHEALTH = 100 + (stats.STM * 20) + (stats.STR * 10 / 2);
     stats.WATK = stats.INT * 2 + stats.STR * 0.25
+ 
     this.setState({PlayerStats: stats})
+
 }
 
 plusMinus = (area) => {
+    if(this.state.givenPoints > 0)
+    {
     return(
-        <div style={{display: "flex"}}>
+        <div className="PlusMinus" style={{display: "flex"}}>
         <div onClick={() => this.plusStat(area)}>
             <FontAwesomeIcon icon="plus" />
         </div>
@@ -92,6 +92,7 @@ plusMinus = (area) => {
         </div>
         </div>    
         )
+    }
 }
 
 calculateLevelUpExp = (stats) => {
@@ -99,33 +100,113 @@ calculateLevelUpExp = (stats) => {
     this.setState({PlayerStats: stats})
 }
 
+ upDatePlayer = (damage, cash, exp, item) => {
+     var player = this.state.PlayerStats
+     player.HEALTH = player.HEALTH - damage;
+     player.CASH = player.CASH + cash;
+     player.EXP = player.EXP + exp;
+    if(player.HEALTH <= 0)
+    {
+        this.killPlayer()
+    }
+     this.setState({PlayerStats: player})
+}
+
+useItem = (health) => {
+    var player = this.state.PlayerStats
+    var itemList = this.state.items;
+    itemList.splice(itemList.length - 1, 1)
+    player.HEALTH = player.HEALTH + health;
+    if(player.HEALTH > player.MAXHEALTH)
+    {
+        player.HEALTH = player.MAXHEALTH;
+    }
+    this.setState({PlayerStats: player, items: itemList})
+}
+
+givePlayerItem = (item, cost) => {
+    var player = this.state.PlayerStats;
+    var itemList = this.state.items;
+    if(player.CASH < cost)
+    {
+
+    }
+    else
+    {
+    player.CASH = player.CASH - cost;
+    itemList.push(item);
+    this.setState({items: itemList})
+    }
+}
+
+killPlayer = () => {
+    this.setState({toggleModal: true})
+}
+
 levelUp = () => {
-    var points = this.state.givenPoints
-    var stats = this.state.PlayerStats
+    var points = this.state.givenPoints;
+    var stats = this.state.PlayerStats;
+    stats.EXP = stats.EXP - stats.expLimit;
     stats.LVL = stats.LVL + 1;
-    points = points + 3
+    points = points + 3;
     this.setState({givenPoints: points}, this.calculateLevelUpExp(stats))
 }
 
+checkForLevelUp = () => {
+    console.log("firing")
+    var player = this.state.PlayerStats;
+    console.log(player)
+    if(player.EXP >= player.expLimit)
+    {
+        this.levelUp()
+    }
+}
+
 render(){
-    console.log(this.state.player)
+  this.checkForLevelUp()
     return(
-        <div style={{fontSize: "medium"}}>
         <div>
-            <p>{this.state.PlayerStats.Name}</p>
+        <Card style={{fontSize: "medium", color: "black", backgroundColor: "darkblue", width: 300}}>
+        <CardBody>
+            <Row>
+            <Col className="PlayerProfileImage" xs="auto">
+            <p style={{marginBottom: 0}}>{this.state.PlayerStats.Name}</p>
+            <img width={128} height={128} src={characterImage} alt="error"></img>
+            </Col>
+            <Col className="AttributeWindow" sm="5">
+            <div className="Attribute">
             {this.plusMinus("STR")}STR: {this.state.PlayerStats.STR}
+            </div>
+            <div className="Attribute">
             {this.plusMinus("INT")}INT: {this.state.PlayerStats.INT}
+            </div>
+            <div className="Attribute">
             {this.plusMinus("STM")}STM: {this.state.PlayerStats.STM}
-        </div>
-        <div>
+            </div>
+            </Col>
+            </Row>
+            <Row>
+            <Col className="PlayerStats">
             <p>LEVEL: {this.state.PlayerStats.LVL}</p>
             <p>EXP: {this.state.PlayerStats.EXP}/{this.state.PlayerStats.expLimit}</p>
             <p>DMG MELEE: {this.state.PlayerStats.ATK}</p>
             <p>DMG WEAPON: {this.state.PlayerStats.WATK}</p>
-            <p>HEALTH: {this.state.PlayerStats.HEALTH}</p>
+            <p>HEALTH: {this.state.PlayerStats.HEALTH}/{this.state.PlayerStats.MAXHEALTH}</p>
             <p>CASH: ¥{this.state.PlayerStats.CASH}</p>
-            <button onClick={() => this.levelUp()}>LVL UP</button>
-        </div>
+            </Col>
+            {/* <Button onClick={() => this.levelUp()}>LVL UP</Button> */}
+            </Row>
+            <Row>
+            <Inventory Items={this.state.items} useItem={this.useItem}/>
+            </Row>
+        </CardBody>
+        </Card>
+        <Modal isOpen={this.state.toggleModal}>
+        <ModalBody>
+            You are dead.
+            <Button onClick={() => window.location.reload()}>OK</Button>
+        </ModalBody>
+        </Modal>
         </div>
     )
 }

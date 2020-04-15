@@ -1,21 +1,56 @@
 import React, {Component} from 'react'
+import {Col, Row} from 'reactstrap'
 import Player from '../Player/Player'
-import Mission from '../Jobs/Mission';
+import Shop from '../Shops/Shop'
+import MissionBoard from '../Jobs/MissionBoard';
 
 
 class MainHub extends Component {
 
+  constructor(){
+    super()
+    this.state = {
+        PlayerStats:{
+            Name: "Kade",
+            LVL: 1,
+            EXP: 0,
+            STR: 0,
+            INT: 0,
+            STM: 0,
+            ATK: 0,
+            WATK: 0,
+            MAXHEALTH: 100,
+            HEALTH: 100,
+            CASH: 500,
+            expLimit: 100,   
+        },
 
+        player: [],
+        givenPoints: 10,
+    }
+    this.playerRef = React.createRef()
+
+    }
 
     render(){
         return(
+          
             <div>
-            <div style={{float: "left"}}>
-            <Player/>
+            <Row>
+            <Col xs="4">
+            <div>
+            <Player ref={this.playerRef} PlayerStats={this.state.PlayerStats}/>
+            </div>
+            </Col>
+            <Col xs="8">
+          <div>
+            <MissionBoard Player={this.playerRef}/>
           </div>
-          <div style={{float: "right"}}>
-            <Mission/>
+          <div>
+            <Shop Player={this.playerRef}/>
           </div>
+          </Col>
+          </Row>
           </div>
         )}
 }

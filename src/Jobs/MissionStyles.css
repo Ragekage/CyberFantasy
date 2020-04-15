@@ -1,0 +1,7 @@
+.MissionCard{
+    border: 2px solid cornflowerblue;
+    background-color: lightskyblue;
+    border-radius: 5px;
+    text-align: center;
+    padding: 5px;
+}

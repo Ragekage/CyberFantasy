@@ -1,28 +1,25 @@
 import React, {Component} from 'react'
 import {Card, Form, FormGroup, FormFeedback, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Input} from 'reactstrap';
 import { Link } from 'react-router-dom';
+import './Login.css'
+import MainMenupic from '../Images/CyberSunsetBG.png'
 
 
 class LoginRegister extends Component {
 
-    constuctor(props) {
-        this.routeChange = this.routeChange.bind(this);
-      }
-
-
-routeChange = (path) => {
-    this.props.history.push(path)
-    }
+   
 
     render()
     {
         console.log(this.props)
         return(
-            <div>
+            <div  className="LoginWindow">
                 <Card>
-                    <CardBody>
-                        <CardTitle>Welcome to CyberFantasy</CardTitle>
+                <CardImg src={MainMenupic} />
+                    <CardBody style={{textAlign: "center"}}>
+                        {/* <CardTitle style={{color: "black"}}>Welcome to CyberFantasy</CardTitle> */}
                         <Link to="/login" className="btn btn-primary">Login</Link>
+                        <div className="divider"/>
                         <Link to="/register" className="btn btn-primary">Register</Link>
                     </CardBody>
                 </Card>
