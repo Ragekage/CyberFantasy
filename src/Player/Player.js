@@ -2,8 +2,10 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {Card, CardBody, Button, Row, Col, Modal, ModalBody} from 'reactstrap'
 import Inventory from './Inventory';
-import characterImage from '../Images/Character1.png'
+import characterImage from '../Images/Andriod.png'
 import './PlayerStyles.css'
+import Spritesheet from 'react-responsive-spritesheet'
+
 // import axios from 'axios';
 
 class Player extends React.Component{
@@ -168,10 +170,10 @@ render(){
         <div>
         <Card style={{fontSize: "medium", color: "black", backgroundColor: "darkblue", width: 300}}>
         <CardBody>
-            <Row>
+            <Row >
             <Col className="PlayerProfileImage" xs="auto">
             <p style={{marginBottom: 0}}>{this.state.PlayerStats.Name}</p>
-            <img width={128} height={128} src={characterImage} alt="error"></img>
+            <Spritesheet width={128} height={128} image={characterImage} widthFrame={512} heightFrame={512} steps={3} fps={12} loop={true} />
             </Col>
             <Col className="AttributeWindow" sm="5">
             <div className="Attribute">

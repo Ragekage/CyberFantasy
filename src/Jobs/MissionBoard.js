@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Mission from './Mission';
+import Battle from './Battle'
 import {Card, CardBody, Row, Col} from 'reactstrap';
 
 class MissionBoard extends Component {
@@ -27,7 +28,6 @@ missionList.map((mission, id) => {
         gains: {cash: mission * 100, exp: mission * 100 * 2, items: {}}
     }
 
-    console.log(MissionType)
     newlist.push(MissionType)
 })
 this.setState({MissionList: newlist})
@@ -52,6 +52,7 @@ this.setState({MissionList: newlist})
         )})}
         </Row>
         </CardBody>
+        <Battle/>
         </Card>
         )
         }
