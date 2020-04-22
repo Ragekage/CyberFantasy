@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import {Card, CardBody, CardTitle, Button} from 'reactstrap';
+import {Card, CardBody, CardTitle, Button, Modal, ModalBody} from 'reactstrap';
 import './MissionStyles.css';
 import Enemy from './Enemy';
+import Battle from './Battle';
+import MissionCardTemplate from '../Images/MissionCard.png'
 
 
 class Mission extends Component {
@@ -14,39 +16,64 @@ this.state = {
     MissionStats: {
         DIFFICULTY: 0,
         TYPES: [],
-        Favours: ""
+        CASHGAIN: 0,
+        EXPGAIN: 0,
+        Favours: "",
+        Name: "",
     },
-    Mission: {},
+
+    baseMissionStats: {
+        DIFFICULTY: 0,
+        TYPES: [],
+        CASHGAIN: 0,
+        EXPGAIN: 0,
+        Favours: "",
+        Name: ""
+    },
     MissionInfo: [],
     Enemies: [],
     MissionInfoReady: false,
-    Gains: {}
+    MissionNames: ["Find Gang Info", "Kill Leader",  "Back Up", "Drive by", "Fuck them up"],
+    toggleModal: false,
 }
 }
 
 fight = () => {
-    var damage = this.props.Mission.difficulty * 10
-    var Enemies = this.state.Enemies
-    this.props.Player.current.upDatePlayer(damage, this.props.Mission.gains.cash, this.props.Mission.gains.exp)
-    Enemies[0].doDamage(20)
+    // var damage = this.props.Mission.difficulty * 10
+    // var Enemies = this.state.Enemies
+    // this.props.Player.current.upDatePlayer(damage, this.props.Mission.gains.cash, this.props.Mission.gains.exp)
+    this.toggleModal()
 }
 
 componentDidMount(){
-    this.setState({Mission: this.props.Mission, Gains: this.props.Mission.gains})
+   
     this.buildMission()
 }
 
 buildMission = () => {
     var random = Math.random();
-    var Enemies = this.state.Enemies;
-    var MissionStats = this.state.MissionStats
+    var randomMissionName = Math.random();
+    var missionNames = this.state.MissionNames
+    randomMissionName = Math.floor(randomMissionName * this.state.MissionNames.length)
+    var Enemies = [];
+    var MissionStats = {
+        DIFFICULTY: 0,
+        TYPES: [],
+        CASHGAIN: 0,
+        EXPGAIN: 0,
+        Favours: "",
+        Name: "",
+    }
     
     random = Math.floor(random * 4) + 1;
     var check
     for( check = 0; check <= random; check++)
     {
         var newEnemy = new Enemy();
-        MissionStats.DIFFICULTY = MissionStats.DIFFICULTY + newEnemy.difficulty
+        MissionStats.DIFFICULTY = MissionStats.DIFFICULTY + newEnemy.difficulty;
+        MissionStats.CASHGAIN = MissionStats.CASHGAIN + newEnemy.EnemyStats.CashGained;
+        MissionStats.EXPGAIN = MissionStats.EXPGAIN + newEnemy.EnemyStats.ExpGained;
+        MissionStats.Name = missionNames[randomMissionName]
         MissionStats.TYPES.push(newEnemy.EnemyStats.Type)
         Enemies.push(newEnemy);
 
@@ -56,6 +83,10 @@ buildMission = () => {
     console.log(MissionStats)
 
     this.setState({Enemies: Enemies, MissionInfoReady: true})
+}
+
+toggleModal = () => {
+    this.setState({toggleModal: !this.state.toggleModal})
 }
 
 calculateMissionFavours = (stats) => {
@@ -94,17 +125,35 @@ BuildMissionInfo = () => {
 
 }
 
+
+difficultyLevel = (difficulty) => {
+    if(difficulty <= 15)
+    {
+        return "Low"
+    }
+    else if(difficulty > 15 && difficulty <= 25)
+    {
+        return "Medium"
+    }
+    else
+    {
+        return "High"
+    }
+}
+
 renderMissionInfo = () => {
 if(this.state.MissionInfoReady === true)
 {
     return(
-        <div style={{color: "black"}}>
-        <p> Difficulty: {this.state.MissionStats.DIFFICULTY}</p>
+        <div className="MissionInfo" style={{color: "black"}}>
+        <p>{this.state.MissionStats.Name}</p>
+        <p> Difficulty: {this.difficultyLevel(this.state.MissionStats.DIFFICULTY)}</p>
         <p> Favours: {this.state.MissionStats.Favours}</p>
-        <p> CashGain: {this.props.Mission.gains.cash}</p>
-        <p> Exp: {this.props.Mission.gains.exp}</p>
+        <p> CashGain: {this.state.MissionStats.CASHGAIN}</p>
+        <p> Exp: {this.state.MissionStats.EXPGAIN}</p>
         <Button onClick={() => this.fight()}>Fight</Button>
-    </div>
+        <Button onClick={this.buildMission}>Refresh</Button>
+        </div>
     )
 }
 }
@@ -122,14 +171,18 @@ renderEnemies = () => {
 
     render()
     {
-
+ console.log(this.state.Enemies)
         return(
-            <div className="MissionCard">
-                <div>
+            <div >
+                <div className="Mission">
                 {this.renderMissionInfo()}
-                    Mission Title
+                <img width={382} height={436} src={MissionCardTemplate}></img>
                 </div>
-             
+            <Modal className="battleModal"  size="lg" isOpen={this.state.toggleModal}>
+                <ModalBody >
+                <Battle toggleModal={this.toggleModal} Enemies={this.state.Enemies} Player={this.props.Player}/>
+                </ModalBody>
+            </Modal>
             </div>
         )
     }

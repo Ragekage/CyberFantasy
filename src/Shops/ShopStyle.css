@@ -1,0 +1,17 @@
+.Shop{
+    transform: translate(550px, -1180px);
+}
+
+.Shoptitle{
+    transform: translate(475px, -370px);
+
+}
+
+.Item{
+    transform: translate(100px, -370px);
+
+}
+
+.Item Button{
+    margin-left: 15px;
+}

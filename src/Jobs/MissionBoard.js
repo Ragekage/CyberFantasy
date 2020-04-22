@@ -39,21 +39,16 @@ this.setState({MissionList: newlist})
         if(this.state.MissionList.length > 0)
         {
             return(
-        <Card style={{backgroundColor: "darkblue"}}>
-        <CardBody>
-        <Row>
+        <div className="MissionBoard">
          {this.state.MissionList.map((mission, id) => {   
         return(
             <Col>
             <div>
-               <Mission Player={this.props.Player} Mission={mission}/>
+               <Mission Player={this.props.Player}/>
             </div>
             </Col>
         )})}
-        </Row>
-        </CardBody>
-        <Battle/>
-        </Card>
+        </div>
         )
         }
         else

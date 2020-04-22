@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {Card, CardBody, Button, Row, Col, Modal, ModalBody} from 'reactstrap'
 import Inventory from './Inventory';
 import characterImage from '../Images/Andriod.png'
+import CharacterInfoTemplate from '../Images/Character_info.png'
 import './PlayerStyles.css'
 import Spritesheet from 'react-responsive-spritesheet'
 
@@ -85,11 +86,11 @@ plusMinus = (area) => {
     {
     return(
         <div className="PlusMinus" style={{display: "flex"}}>
-        <div onClick={() => this.plusStat(area)}>
+        <div style={{marginRight: 5}} onClick={() => this.plusStat(area)}>
             <FontAwesomeIcon icon="plus" />
         </div>
         {this.state.givenPoints}
-        <div onClick={() => this.minusStat(area)}>
+        <div style={{marginLeft: 5}} onClick={() => this.minusStat(area)}>
             <FontAwesomeIcon icon="minus" />
         </div>
         </div>    
@@ -102,7 +103,7 @@ calculateLevelUpExp = (stats) => {
     this.setState({PlayerStats: stats})
 }
 
- upDatePlayer = (damage, cash, exp, item) => {
+ upDatePlayer = (damage = 0, cash = 0, exp = 0, item) => {
      var player = this.state.PlayerStats
      player.HEALTH = player.HEALTH - damage;
      player.CASH = player.CASH + cash;
@@ -167,15 +168,13 @@ checkForLevelUp = () => {
 render(){
   this.checkForLevelUp()
     return(
-        <div>
-        <Card style={{fontSize: "medium", color: "black", backgroundColor: "darkblue", width: 300}}>
-        <CardBody>
-            <Row >
-            <Col className="PlayerProfileImage" xs="auto">
-            <p style={{marginBottom: 0}}>{this.state.PlayerStats.Name}</p>
-            <Spritesheet width={128} height={128} image={characterImage} widthFrame={512} heightFrame={512} steps={3} fps={12} loop={true} />
-            </Col>
-            <Col className="AttributeWindow" sm="5">
+        <div className="InfoTemplate">
+        <img  width={448} height={896} src={CharacterInfoTemplate}></img>
+        <div className="CImage"> 
+        <Spritesheet style={{height: 240, width: 240}} image={characterImage} widthFrame={512} heightFrame={512} steps={3} fps={12} loop={true} />
+        <p style={{marginBottom: 0, transform: "translate(-500px, 0px)"}}>{this.state.PlayerStats.Name}</p>
+        </div>
+        <div className="AttributeList"> 
             <div className="Attribute">
             {this.plusMinus("STR")}STR: {this.state.PlayerStats.STR}
             </div>
@@ -185,24 +184,19 @@ render(){
             <div className="Attribute">
             {this.plusMinus("STM")}STM: {this.state.PlayerStats.STM}
             </div>
-            </Col>
-            </Row>
-            <Row>
-            <Col className="PlayerStats">
+        </div>
+        <div className="PlayerInfo">
             <p>LEVEL: {this.state.PlayerStats.LVL}</p>
             <p>EXP: {this.state.PlayerStats.EXP}/{this.state.PlayerStats.expLimit}</p>
             <p>DMG MELEE: {this.state.PlayerStats.ATK}</p>
             <p>DMG WEAPON: {this.state.PlayerStats.WATK}</p>
             <p>HEALTH: {this.state.PlayerStats.HEALTH}/{this.state.PlayerStats.MAXHEALTH}</p>
             <p>CASH: ¥{this.state.PlayerStats.CASH}</p>
-            </Col>
             {/* <Button onClick={() => this.levelUp()}>LVL UP</Button> */}
-            </Row>
-            <Row>
+        </div>
+        <div className="InventoryP"> 
             <Inventory Items={this.state.items} useItem={this.useItem}/>
-            </Row>
-        </CardBody>
-        </Card>
+        </div>
         <Modal isOpen={this.state.toggleModal}>
         <ModalBody>
             You are dead.

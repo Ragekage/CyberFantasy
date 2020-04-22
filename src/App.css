@@ -1,9 +1,7 @@
 .App {
   text-align: center;
   background-color: #282c34;
-
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -15,6 +13,9 @@
   }
 }
 
+
+
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -24,6 +25,9 @@
   padding-left: 10px;
   font-size: calc(10px + 2vmin);
   color: white;
+  font-family: 'Mode Seven';
+
+
 }
 
 .App-link {
