@@ -1,17 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './Fonts/modeseven-L3n5.ttf'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCheckSquare, faCoffee, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
+import { faCheckSquare, faCoffee, faPlus, faMinus, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-library.add( faCheckSquare, faCoffee, faPlus, faMinus )
+library.add( faCheckSquare, faCoffee, faPlus, faMinus, faChevronLeft, faChevronRight)
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App style={{fontFamily: 'Mode Seven'}} />
   </React.StrictMode>,
   document.getElementById('root')
 );

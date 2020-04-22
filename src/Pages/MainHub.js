@@ -3,6 +3,7 @@ import {Col, Row} from 'reactstrap'
 import Player from '../Player/Player'
 import Shop from '../Shops/Shop'
 import MissionBoard from '../Jobs/MissionBoard';
+import CharacterBuilder from '../CharacterCreator/CharacterBuilder';
 
 
 class MainHub extends Component {
@@ -17,8 +18,8 @@ class MainHub extends Component {
             STR: 0,
             INT: 0,
             STM: 0,
-            ATK: 0,
-            WATK: 0,
+            ATK: 10,
+            WATK: 10,
             MAXHEALTH: 100,
             HEALTH: 100,
             CASH: 500,
@@ -34,23 +35,19 @@ class MainHub extends Component {
 
     render(){
         return(
-          
             <div>
-            <Row>
-            <Col xs="4">
             <div>
             <Player ref={this.playerRef} PlayerStats={this.state.PlayerStats}/>
             </div>
-            </Col>
-            <Col xs="8">
           <div>
             <MissionBoard Player={this.playerRef}/>
           </div>
           <div>
             <Shop Player={this.playerRef}/>
           </div>
-          </Col>
-          </Row>
+          {/* <Row>
+          <CharacterBuilder CreateCharacter={this.props.CreateCharacter}/>
+          </Row> */}
           </div>
         )}
 }

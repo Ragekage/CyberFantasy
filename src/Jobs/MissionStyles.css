@@ -5,3 +5,165 @@
     text-align: center;
     padding: 5px;
 }
+
+.MissionInfo{
+    font-size: 20px;
+    transform: translate(90px, 350px);
+
+}
+
+.MissionInfo Button{
+    margin-left: 10px;
+}
+
+.Mission{
+    transform: translate(50px, -1170px);
+
+}
+
+
+
+
+.battleMenu{
+    transform: translate(-20px, 0px);
+
+}
+
+.battleAnimations{
+    transform: translate(130px, -25px);
+    width: 768px;
+    height: 384px;
+}
+
+.ButtonOptions{
+    transform: translate(645px, 0px);
+}
+
+.ButtonOptions Button {
+    margin-right: 10px;
+}
+
+.modal-body{
+    background-image: url(../Images/BattleWindow.png);
+    background-repeat: no-repeat;
+    background-size: 1000px 600px;
+    width: 1024px;
+    height: 800px;
+    transform: translate(-100px, 0px);
+    border-radius: 5px;
+    position: fixed;
+    background-color: rgba(122, 122, 122, 0);
+    color: white;
+}
+
+.modal-backdrop {
+    background-color: rgba(122, 122, 122, 0);
+    
+    color: aliceblue;
+}
+
+.battleModal .modal-content {
+    background-color: rgba(122, 122, 122, 0);
+    border: 0px;
+}
+
+.MissionBoard{
+    display: flex;
+    transform: translate(400px, 0px);
+}
+
+.typewriter p{
+    border-right: .15em solid green;
+    font-family: "Courier";
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translate(130px, 450px);
+  }
+
+  .typewriter p:nth-child(1) {
+    width: 17rem;
+    -webkit-animation: type 2s steps(40, end);
+    animation: type 2s steps(40, end);
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+  }
+
+  .typewriter p:nth-child(2) {
+    width: 18rem;
+    opacity: 0;
+    -webkit-animation: type2 2s steps(40, end);
+    animation: type2 2s steps(40, end);
+    -webkit-animation-delay: 2s;
+    animation-delay: 2s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: green; }
+  }
+
+  @keyframes type {
+    0% {
+      width: 0;
+    }
+    99.9% {
+      border-right: .15em solid green;
+    }
+    100% {
+      border: none;
+    }
+  }
+  
+  @-webkit-keyframes type {
+    0% {
+      width: 0;
+    }
+    99.9% {
+      border-right: .15em solid green;
+    }
+    100% {
+      border: none;
+    }
+  }
+  
+  @keyframes type2 {
+    0% {
+      width: 0;
+    }
+    1% {
+      opacity: 1;
+    }
+    99.9% {
+      border-right: .15em solid green;
+    }
+    100% {
+      opacity: 1;
+      border: none;
+    }
+  }
+  
+  @-webkit-keyframes type2 {
+    0% {
+      width: 0;
+    }
+    1% {
+      opacity: 1;
+    }
+    99.9% {
+      border-right: .15em solid green;
+    }
+    100% {
+      opacity: 1;
+      border: none;
+    }
+  }
+  
+  /* @keyframes type3 {
+    0% {
+      width: 0;
+    } */
+   
+
