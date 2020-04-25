@@ -80,7 +80,6 @@ buildMission = () => {
     }
 
     this.calculateMissionFavours(MissionStats)
-    console.log(MissionStats)
 
     this.setState({Enemies: Enemies, MissionInfoReady: true})
 }
@@ -171,7 +170,6 @@ renderEnemies = () => {
 
     render()
     {
- console.log(this.state.Enemies)
         return(
             <div >
                 <div className="Mission">

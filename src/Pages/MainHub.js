@@ -4,6 +4,8 @@ import Player from '../Player/Player'
 import Shop from '../Shops/Shop'
 import MissionBoard from '../Jobs/MissionBoard';
 import CharacterBuilder from '../CharacterCreator/CharacterBuilder';
+import {callBackendAPI, checkUser} from '../Utilities/ServerEndpoints'
+
 
 
 class MainHub extends Component {
@@ -35,23 +37,32 @@ class MainHub extends Component {
     }
 
     componentDidMount() {
+      var userData = {
+        username: "Kadejd",
+        password: "lol"
+      }
       // Call our fetch function below once the component mounts
-    this.callBackendAPI()
-      .then(res => this.setState({ data: res.express }))
-      .catch(err => console.log(err));
-  }
-    // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
-  callBackendAPI = async () => {
-    const response = await fetch('/express_backend');
-    const body = await response.json();
-
-    if (response.status !== 200) {
-      throw Error(body.message) 
-    }
-    return body;
+      // callBackendAPI()
+      // .then(res => this.setState({data: res.players}))
+    
+      
+    
   };
 
+  testDb = () => {
+    if(this.state.data !== null)
+    {
+      var data = this.state.data
+      return(
+        <div style={{fontSize: 100, color: "black"}}>
+        </div>
+      )
+    }
+  }
+
     render(){
+
+      
         return(
             <div>
             <div>
@@ -66,6 +77,7 @@ class MainHub extends Component {
           {/* <Row>
           <CharacterBuilder CreateCharacter={this.props.CreateCharacter}/>
           </Row> */}
+
           </div>
         )}
 }

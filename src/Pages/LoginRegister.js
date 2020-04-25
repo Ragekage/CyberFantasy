@@ -5,7 +5,6 @@ import './Login.css'
 import Spritesheet from 'react-responsive-spritesheet'
 import MainMenupic from '../Images/CyberSunsetAnimated.png'
 
-
 class LoginRegister extends Component {
 
    

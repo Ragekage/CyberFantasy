@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Card, Form, FormGroup, FormFeedback, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Input} from 'reactstrap';
 import './Login.css'
+import {emailUserCheck, createUser} from '../Utilities/ServerEndpoints'
 class Register extends Component {
 
 constructor(){
@@ -14,6 +15,7 @@ constructor(){
             passwordValid: false,
             usernameValid: false,
             formValid: false,
+            invalidData: false,
     }
 }
 
@@ -62,8 +64,35 @@ validateField(fieldName, value) {
  }
 
 
-    render(){
+ register = () =>{
+   console.log(this.state.username)
+  var userData = {
+    username: this.state.username,
+    email: this.state.email,
+    password: this.state.password
+  }
 
+  emailUserCheck(userData).then(response => {
+    console.log(response)
+    if(response.data === "exists")
+    {
+      this.setState({invalidData: true})
+      setTimeout(() => {
+      this.setState({invalidData: false})
+      }, 4000)
+    }
+    else
+    {
+      createUser(userData).then(response => {
+        console.log("User created")
+      })
+    }
+  })
+ }
+
+
+    render(){
+      console.log(this.state.username)
         return(
         <div className="LoginWindow">
         <Card>
@@ -83,7 +112,8 @@ validateField(fieldName, value) {
                         <FormFeedback>invalid Password</FormFeedback>
                     </FormGroup>
                 </Form>
-             <Button>Register</Button>
+                {this.state.invalidData === true && (<div style={{color: "red"}}>Username, Email already Exists</div>)}
+             <Button onClick={this.register}>Register</Button>
             </CardBody>
         </Card>
         </div>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Card, Form, FormGroup, FormFeedback, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Input} from 'reactstrap';
 import {LoginButton} from '../Utilities/AuthService'
+
 import './Login.css'
 class Login extends Component {
 
@@ -13,6 +14,8 @@ constructor(){
             emailValid: false,
             passwordValid: false,
             formValid: false,
+            loginFail: false,
+            errorMsg: ""
     }
 }
 
@@ -54,9 +57,23 @@ validateField(fieldName, value) {
     return(error.length === 0 ? false : true);
  }
 
+ loginFail = (response) =>{
+  this.setState({loginFail: true, errorMsg: response})
+
+  setTimeout(() => {
+    this.setState({loginFail: false})
+  }, 5000)
+ }
+
+
 
     render(){
+      var userData = {
+              username: this.state.email,
+              password: this.state.password
+            }
 
+            console.log(userData)
         return(
         <div className="LoginWindow">
         <Card>
@@ -71,8 +88,9 @@ validateField(fieldName, value) {
                         <Input invalid={this.errorClass(this.state.formErrors.password)}  valid={this.state.password.length === 0 ? false : !this.errorClass(this.state.formErrors.password)} onChange={e => this.handleUserInput(e)}  type="password" name="password" id="Password" placeholder="Enter Password"></Input>
                         <FormFeedback>invalid Password</FormFeedback>
                     </FormGroup>
+                      {this.state.loginFail === true && (<div style={{color: "red"}}>{this.state.errorMsg}</div>)}
                 </Form>
-             <LoginButton isDisabled={!this.state.formValid}/>
+             <LoginButton isDisabled={!this.state.formValid} loginFail={this.loginFail} userData={userData}/>
             </CardBody>
         </Card>
         </div>

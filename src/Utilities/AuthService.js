@@ -1,4 +1,5 @@
 import React from 'react'
+import { checkUser} from '../Utilities/ServerEndpoints'
 import {
     BrowserRouter as Router,
     Switch,
@@ -16,7 +17,7 @@ export function PrivateRoute({ children, ...rest }) {
     <Route
       {...rest}
       render={({ location }) =>
-        fakeAuth.isAuthenticated ? (
+        Auth.isAuthenticated ? (
           children
         ) : (
           <Redirect
@@ -31,33 +32,52 @@ export function PrivateRoute({ children, ...rest }) {
   );
 }
 
-export function LoginButton(isDisabled) {
-    console.log(isDisabled.isDisabled);
+export function LoginButton( props) {
+    console.log( props);
     let history = useHistory();
     let location = useLocation();
-  
     let { from } = location.state || { from: { pathname: "/mainhub" } };
-    let login = () => {
-      fakeAuth.authenticate(() => {
+    let login = (userData, callback) => {
+      console.log(userData)
+      Auth.setUserdata(userData, callback)
+      Auth.authenticate(() => {
         history.replace(from);
       });
     };
   
     return (
       <div>
-          <Button disabled={isDisabled.isDisabled} onClick={login} color="primary">OK</Button>
+          <Button disabled={props.isDisabled} onClick={() => login(props.userData, props.loginFail)} color="primary">OK</Button>
       </div>
     );
   }
 
-export const fakeAuth = {
+export const Auth = {
   isAuthenticated: false,
+  userData: {},
+  callback: {},
+
+  setUserdata(data, callback) {
+    this.userData = data;
+    this.callback = callback
+  },
   authenticate(cb) {
-    fakeAuth.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
+    console.log(this.userData)
+    checkUser(this.userData).then(response => {
+      if(response.players === "Password Accepted")
+      {
+        Auth.isAuthenticated = true;
+        setTimeout(cb, 100); // fake async
+      }
+      else
+      {
+        this.callback(response.players)
+      }
+    });
+  
   },
   signout(cb) {
-    fakeAuth.isAuthenticated = false;
+    Auth.isAuthenticated = false;
     setTimeout(cb, 100);
   }
 };
@@ -65,12 +85,12 @@ export const fakeAuth = {
 export function AuthButton() {
   let history = useHistory();
 
-  return fakeAuth.isAuthenticated ? (
+  return Auth.isAuthenticated ? (
     <p>
       Welcome!{" "}
       <button
         onClick={() => {
-          fakeAuth.signout(() => history.push("/"));
+          Auth.signout(() => history.push("/"));
         }}
       >
         Sign out

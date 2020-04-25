@@ -156,9 +156,7 @@ levelUp = () => {
 }
 
 checkForLevelUp = () => {
-    console.log("firing")
     var player = this.state.PlayerStats;
-    console.log(player)
     if(player.EXP >= player.expLimit)
     {
         this.levelUp()

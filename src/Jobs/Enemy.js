@@ -43,7 +43,6 @@ get hi(){
    {
         this.EnemyStats = stats
    }
-   console.log(this.EnemyStats)
 }
 
 getDifficulty(){
@@ -110,7 +109,6 @@ buildTypeRange = (difficulty, enemyStats, statsMultipler, lvl ) => {
         enemyStats.CashGained = 600 * lvl
         enemyStats.ExpGained = 500 * lvl
         }
-        console.log(enemyStats)
         return enemyStats
 
 }
@@ -146,7 +144,6 @@ buildTypeMelee = (difficulty, enemyStats, statsMultipler, lvl ) => {
         enemyStats.ExpGained = 500 * lvl
         }
 
-        console.log(enemyStats)
         return enemyStats
 
 }
@@ -185,7 +182,6 @@ buildTypeCommon = ( difficulty, enemyStats, statsMultipler, lvl) => {
         enemyStats.ExpGained = 500 * lvl
 
         }
-        console.log(enemyStats)
         return enemyStats
 
 }
