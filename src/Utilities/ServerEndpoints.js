@@ -29,11 +29,12 @@ var response = axios.post('/createuser', {
 }
 
 export async function createPlayer(postData){
+  console.log(postData)
   var response = await axios.post('/createnewplayer', {
     postData
   }).then(function(response) {
     console.log(response);
-    return response
+    return response.data.response
   })
   .catch(function(error) {
     console.log(error)
@@ -45,6 +46,18 @@ return response
 
 export async function checkPlayerName(name){
   var response = await axios.get('/checkplayer/' + name).then(function(response){
+    console.log(response)
+    return response.data.response
+  }).catch(function(error) {
+    console.log(error)
+    return error
+  })
+
+  return response
+}
+
+export async function checkForPlayer(id){
+  var response = await axios.get('/checkforplayer/' + id).then(function(response) {
     console.log(response)
     return response.data.response
   }).catch(function(error) {

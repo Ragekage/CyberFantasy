@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Form, FormGroup, FormFeedback, Button, Input} from 'reactstrap';
+import { Form, FormGroup, FormFeedback, Button, Input, Modal, ModalBody} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CreateWindow from '../Images/BattleWindow.png'
 import {createPlayer, checkPlayerName} from '../Utilities/ServerEndpoints'
@@ -10,7 +10,8 @@ class CreatePlayer extends Component {
 
 
 constructor(props){
- super()   
+ super(props)   
+ console.log(props)
     this.state = {
         playerDetails: {
             name: "",
@@ -18,10 +19,12 @@ constructor(props){
             INT: 0,
             STM: 0,
             STL: 0,
-            givenPoints: 10, 
+            givenPoints: 10,
+            profileCode: null, 
         },
         nameInvalid: false,
         pointsInvalid: false,
+        modalOpen: false,
     }
 }
 
@@ -33,7 +36,7 @@ onChange = (e) => {
 
 plusMinus = (area, direction) => {
     var player = this.state.playerDetails
-    console.log(this.refs.playerProfile.current.getSpriteProfile())
+    console.log(this.refs.playerProfile.getSpriteProfile())
     if(player.givenPoints > 0)
     {
         if(direction === "add")
@@ -75,6 +78,10 @@ plusMinus = (area, direction) => {
 
 }
 
+toggleModal = () => {
+    this.setState({modalOpen: !this.state.modalOpen})
+}
+
 setNameInvalid = () => {
     this.setState({nameInvalid: true})
     setTimeout(() => {
@@ -102,6 +109,23 @@ createNewPlayer = () => {
         if(response === "already exists")
         {
             this.setNameInvalid()
+        }
+        else
+        {
+
+            player.profileCode = this.refs.playerProfile.getSpriteProfile()
+           
+            createPlayer(player).then(response => {
+                if(response === "created")
+                {
+                    this.toggleModal()
+                    this.setState({playerDetails: player})
+                }
+                else
+                {
+
+                }
+            })
         }
     })
     }
@@ -159,6 +183,13 @@ render()
             <div style={{transform: "translate(340px, -1010px)", display: this.displayError(), color: "red", fontSize: "25px"}} >Please use all points</div>
             </FormGroup>
         </Form>
+        <Modal style={{transform: "translate(-180px, 0px)"}} className="battleModal" isOpen={this.state.modalOpen}>
+            <ModalBody >
+              <div style={{transform: "translate(150px, 100px)", width: 700, fontSize: 35}}>  <p>Thank you for creating a profile! {this.state.playerDetails.name}</p>
+                Soon you will be able to use him! look out for a email when the feature becomes available 
+                <div style={{transform: "translate(600px, 100px)", fontSize: 30}}><Button style={{fontSize: 35}} onClick={() => this.props.history.push('/welcome')}>OK</Button></div> </div>
+            </ModalBody>
+        </Modal>
         </div>
     )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { checkUser} from '../Utilities/ServerEndpoints'
+import { checkUser, checkForPlayer} from '../Utilities/ServerEndpoints'
 import {
     BrowserRouter as Router,
     Switch,
@@ -41,7 +41,15 @@ export function LoginButton( props) {
       console.log(userData)
       Auth.setUserdata(userData, callback)
       Auth.authenticate(() => {
+        if(Auth.newPlayer === true)
+        {
+          from.pathname = "/createplayer"
+          history.replace(from);
+        }
+        else
+        {
         history.replace(from);
+        }
       });
     };
   
@@ -56,26 +64,48 @@ export const Auth = {
   isAuthenticated: false,
   userData: {},
   callback: {},
+  playerData: null,
+  newPlayer: true,
 
   setUserdata(data, callback) {
     this.userData = data;
     this.callback = callback
   },
+
+ 
+
   authenticate(cb) {
     console.log(this.userData)
     checkUser(this.userData).then(response => {
       if(response.players === "Password Accepted")
       {
-        Auth.isAuthenticated = true;
-        setTimeout(cb, 100); // fake async
+        console.log(response)
+        checkForPlayer(response.response[0].Id).then(response => {
+          if(response.response === "exists")
+          {
+            Auth.newPlayer = false
+            Auth.isAuthenticated = true;
+            setTimeout(cb, 100); // fake async
+          }
+          else
+          {
+            Auth.isAuthenticated = true;
+            setTimeout(cb, 100); // fake async
+          }
+        }).catch(error => {
+          console.log(error)
+        })
       }
       else
       {
         this.callback(response.players)
       }
-    });
-  
+    }).catch(error => {
+      console.log(error)
+    })
   },
+
+
   signout(cb) {
     Auth.isAuthenticated = false;
     setTimeout(cb, 100);
