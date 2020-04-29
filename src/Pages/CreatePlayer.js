@@ -179,7 +179,7 @@ render()
             <div>{this.plusMinusRender("STL")} STL</div>
             </FormGroup>
             <FormGroup className="CreatePlayerSaveB" >
-            <Button invalid={true}    onClick={this.createNewPlayer} className="CreatePlayerSaveB">Save</Button>
+            <Button invalid={true} style={{fontSize: 20}}   onClick={this.createNewPlayer} className="CreatePlayerSaveB">Save</Button>
             <div style={{transform: "translate(340px, -1010px)", display: this.displayError(), color: "red", fontSize: "25px"}} >Please use all points</div>
             </FormGroup>
         </Form>
