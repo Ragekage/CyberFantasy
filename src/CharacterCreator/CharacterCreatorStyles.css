@@ -2,12 +2,17 @@
     position: relative;
     width: 512px;
     height: 512px;
-    background-color: black;
+    background-color: rgb(50, 57, 94);
 
 }
 
 .MainWindow{
-    border: 2px solid black;
+    border: 2px solid rgb(50, 57, 94);
     border-radius: 5px;
-    background-color: black;
+    width: 515px;
+    margin-left: 5px;
+    transform: translate(115px, -320px);
+    text-align: center;
+    background-color: rgb(27, 31, 49);
 }
+

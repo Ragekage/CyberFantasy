@@ -35,6 +35,11 @@ constructor()
     }
 }
 
+getSpriteProfile = () => {
+    var sprite = this.state.spritePos;
+    var avatarCode = sprite.bodyPos.toString() + sprite.eyePos.toString() + sprite.hairPos.toString() + sprite.headPos.toString() + sprite.hairPos.toString() 
+    return avatarCode
+}
 
 MoveLeft = (field) => {
     var currentPos = this.state.spritePos
@@ -56,7 +61,6 @@ MoveLeft = (field) => {
 
 MoveRight = (field) => {
     var currentPos = this.state.spritePos
-
     if(currentPos[field]  === 6)
     {
 
@@ -84,26 +88,32 @@ render()
             <Spritesheet style={{position: "absolute"}} ref={"facePos"}  image={faces} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.facePos} endAt={this.state.spritePos.facePos} steps={6} fps={6} loop={true} />
         </div>
         <div>
-            <Card style={{color: "black",}}>
-            <CardTitle style={{textAlign: "center"}}>Character Creator</CardTitle>
-            <CardBody>
+
+            <div>
             <FontAwesomeIcon onClick={() => this.MoveLeft("bodyPos")} icon="chevron-left"/>
             Body {this.state.spritePos.bodyPos}
             <FontAwesomeIcon onClick={() => this.MoveRight("bodyPos")} icon="chevron-right"/>
+            </div>
+            <div>
             <FontAwesomeIcon onClick={() => this.MoveLeft("eyePos")} icon="chevron-left"/>
             Eye {this.state.spritePos.eyePos}
             <FontAwesomeIcon onClick={() => this.MoveRight("eyePos")} icon="chevron-right"/>
+            </div>
+            <div>
             <FontAwesomeIcon onClick={() => this.MoveLeft("hairPos")} icon="chevron-left"/>
             Hair {this.state.spritePos.hairPos}
             <FontAwesomeIcon onClick={() => this.MoveRight("hairPos")} icon="chevron-right"/>
+            </div>
+            <div>
             <FontAwesomeIcon onClick={() => this.MoveLeft("headPos")} icon="chevron-left"/>
             Head {this.state.spritePos.headPos}
             <FontAwesomeIcon onClick={() => this.MoveRight("headPos")} icon="chevron-right"/>
+            </div>
+            <div>
             <FontAwesomeIcon onClick={() => this.MoveLeft("facePos")} icon="chevron-left"/>
             Face {this.state.spritePos.facePos}
             <FontAwesomeIcon  onClick={() => this.MoveRight("facePos")} icon="chevron-right"/>
-            </CardBody>
-            </Card>
+            </div>
            
           
         </div>

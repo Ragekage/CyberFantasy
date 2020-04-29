@@ -1,6 +1,7 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import {Card, Form, FormGroup, FormFeedback, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Input} from 'reactstrap';
-import {LoginButton} from '../Utilities/AuthService'
+import {Link} from 'react-router-dom';
+import {LoginButton} from '../Utilities/AuthService';
 
 import './Login.css'
 class Login extends Component {
@@ -65,6 +66,7 @@ validateField(fieldName, value) {
   }, 5000)
  }
 
+ 
 
 
     render(){
@@ -76,21 +78,24 @@ validateField(fieldName, value) {
             console.log(userData)
         return(
         <div className="LoginWindow">
-        <Card>
+        <Card style={{backgroundColor: "rgba(111, 111, 111, 0)", border: "0px"}} className="loginCard">
             <CardBody>
-                <CardTitle style={{color: "black"}}>Login</CardTitle>
+            <div className="LoginWindowContents">
+                <CardTitle style={{color: "white"}}>Login</CardTitle>
                 <Form>
                     <FormGroup>
                         <Input invalid={this.errorClass(this.state.formErrors.email)} valid={this.state.email.length === 0 ? false : !this.errorClass(this.state.formErrors.email)} onChange={e => this.handleUserInput(e)} type="email" name="email" id="Email" placeholder="Enter Email" ></Input>
-                        <FormFeedback>Invalid Email</FormFeedback>
+                        <FormFeedback style={{position: "fixed"}}>Invalid Email</FormFeedback>
                     </FormGroup>
-                    <FormGroup>
-                        <Input invalid={this.errorClass(this.state.formErrors.password)}  valid={this.state.password.length === 0 ? false : !this.errorClass(this.state.formErrors.password)} onChange={e => this.handleUserInput(e)}  type="password" name="password" id="Password" placeholder="Enter Password"></Input>
-                        <FormFeedback>invalid Password</FormFeedback>
+                    <FormGroup style={{transform: "translate(0px, 30px)"}}>
+                        <Input  invalid={this.errorClass(this.state.formErrors.password)}  valid={this.state.password.length === 0 ? false : !this.errorClass(this.state.formErrors.password)} onChange={e => this.handleUserInput(e)}  type="password" name="password" id="Password" placeholder="Enter Password"></Input>
+                        <FormFeedback style={{position: "fixed"}}>invalid Password</FormFeedback>
                     </FormGroup>
-                      {this.state.loginFail === true && (<div style={{color: "red"}}>{this.state.errorMsg}</div>)}
+                      {this.state.loginFail === true && (<div style={{color: "red", position: "fixed"}}>{this.state.errorMsg}</div>)}
                 </Form>
-             <LoginButton isDisabled={!this.state.formValid} loginFail={this.loginFail} userData={userData}/>
+             <div className="OkBtn"><LoginButton isDisabled={!this.state.formValid} loginFail={this.loginFail} userData={userData}/></div>
+             <div className="CancelBtn"><Link style={{fontSize: 30}} to="/welcome" className="btn btn-primary">Cancel</Link></div>
+             </div>
             </CardBody>
         </Card>
         </div>

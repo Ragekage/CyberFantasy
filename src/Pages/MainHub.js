@@ -3,8 +3,7 @@ import {Col, Row} from 'reactstrap'
 import Player from '../Player/Player'
 import Shop from '../Shops/Shop'
 import MissionBoard from '../Jobs/MissionBoard';
-import CharacterBuilder from '../CharacterCreator/CharacterBuilder';
-import {callBackendAPI, checkUser} from '../Utilities/ServerEndpoints'
+
 
 
 
@@ -37,28 +36,11 @@ class MainHub extends Component {
     }
 
     componentDidMount() {
-      var userData = {
-        username: "Kadejd",
-        password: "lol"
-      }
-      // Call our fetch function below once the component mounts
-      // callBackendAPI()
-      // .then(res => this.setState({data: res.players}))
-    
+
       
     
   };
 
-  testDb = () => {
-    if(this.state.data !== null)
-    {
-      var data = this.state.data
-      return(
-        <div style={{fontSize: 100, color: "black"}}>
-        </div>
-      )
-    }
-  }
 
     render(){
 

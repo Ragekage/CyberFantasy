@@ -1,11 +1,13 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import {Card, Form, FormGroup, FormFeedback, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Input} from 'reactstrap';
-import './Login.css'
-import {emailUserCheck, createUser} from '../Utilities/ServerEndpoints'
+import {Link} from 'react-router-dom';
+import './Login.css';
+import {emailUserCheck, createUser} from '../Utilities/ServerEndpoints';
 class Register extends Component {
 
-constructor(){
-    super()
+constructor(props){
+    super(props)
+    console.log(props.history)
     this.state ={
             email: '',
             password: '',
@@ -16,6 +18,7 @@ constructor(){
             usernameValid: false,
             formValid: false,
             invalidData: false,
+            validData: false,
     }
 }
 
@@ -85,9 +88,16 @@ validateField(fieldName, value) {
     {
       createUser(userData).then(response => {
         console.log("User created")
+        this.setState({validData: true}, this.sendUserToWelcome())
       })
     }
   })
+ }
+
+ sendUserToWelcome = () => {
+   setTimeout(() => {
+     this.props.history.push('/welcome')
+   },3000)
  }
 
 
@@ -95,25 +105,30 @@ validateField(fieldName, value) {
       console.log(this.state.username)
         return(
         <div className="LoginWindow">
-        <Card>
+        <Card style={{backgroundColor: "rgba(111, 111, 111, 0)", border: "0px"}}>
             <CardBody>
-                <CardTitle style={{color: "black"}}>Register</CardTitle>
+            <div className="RegisterBody">
+                <CardTitle style={{color: "white"}}>Register</CardTitle>
                 <Form>
-                    <FormGroup>
+                    <FormGroup >
                         <Input invalid={this.errorClass(this.state.formErrors.username)}  valid={this.state.username.length === 0 ? false : !this.errorClass(this.state.formErrors.username)} onChange={e => this.handleUserInput(e)}  type="username" name="username" id="username" placeholder="Enter Username"></Input>
-                        <FormFeedback>invalid Username</FormFeedback>
+                        <FormFeedback style={{position: "fixed"}}>invalid Username</FormFeedback>
                     </FormGroup>
-                    <FormGroup>
+                    <FormGroup style={{transform: "translate(0px, 30px)"}}>
                         <Input invalid={this.errorClass(this.state.formErrors.email)} valid={this.state.email.length === 0 ? false : !this.errorClass(this.state.formErrors.email)} onChange={e => this.handleUserInput(e)} type="email" name="email" id="Email" placeholder="Enter Email" ></Input>
-                        <FormFeedback>Invalid Email</FormFeedback>
+                        <FormFeedback style={{position: "fixed"}}>Invalid Email</FormFeedback>
                     </FormGroup>
-                    <FormGroup>
+                    <FormGroup style={{transform: "translate(0px, 60px)"}}>
                         <Input invalid={this.errorClass(this.state.formErrors.password)}  valid={this.state.password.length === 0 ? false : !this.errorClass(this.state.formErrors.password)} onChange={e => this.handleUserInput(e)}  type="password" name="password" id="Password" placeholder="Enter Password"></Input>
-                        <FormFeedback>invalid Password</FormFeedback>
+                        <FormFeedback style={{position: "fixed"}}>invalid Password</FormFeedback>
                     </FormGroup>
                 </Form>
-                {this.state.invalidData === true && (<div style={{color: "red"}}>Username, Email already Exists</div>)}
-             <Button onClick={this.register}>Register</Button>
+                {this.state.invalidData === true && (<div className="errorMsg" style={{color: "red", position: "fixed"}}>Username, Email already Exists</div>)}
+                {this.state.validData === true && (<div className="errorMsg" style={{color: "red", position: "fixed"}}>Check Your Email to Confirm</div>)}
+
+             <div className="RegisterBtn"><Button onClick={this.register}>Register</Button></div>
+             <div className="RegisterCancelBtn"><Link style={{fontSize: 30}} to="/welcome" className="btn btn-primary">Cancel</Link></div>
+            </div>
             </CardBody>
         </Card>
         </div>

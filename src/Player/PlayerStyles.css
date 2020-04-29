@@ -51,6 +51,7 @@
 .PlusMinus{
     margin: auto;
     width: 70%;
+    transform: translate(0px, 0px);
 }
 
 

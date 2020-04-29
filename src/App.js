@@ -5,6 +5,7 @@ import Register from './Pages/Register'
 import MainHub from './Pages/MainHub'
 import Confirmation from './Pages/Confirmation'
 import LoginRegister from './Pages/LoginRegister'
+import CreatePlayer from './Pages/CreatePlayer'
 import {PrivateRoute} from './Utilities/AuthService'
 
 import {BrowserRouter as Router, Redirect, Switch, Route} from "react-router-dom";
@@ -29,10 +30,9 @@ function App() {
         <Route path="/login">
           <Login/>
         </Route>
-        <Route path="/register">
-          <Register/>
-        </Route>
+        <Route path="/register" component={Register} />
         <Route path="/confirmation/:confirmId" component={Confirmation} />
+        <Route path="/createplayer" component={CreatePlayer}/>
         <PrivateRoute path="/mainhub">
           <MainHub/>
         </PrivateRoute>
