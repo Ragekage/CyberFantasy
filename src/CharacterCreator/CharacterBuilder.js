@@ -69,11 +69,9 @@ MoveRight = (field) => {
     {
         currentPos[field]  = currentPos[field]  + 1
         this.setState({spritePos: currentPos})
-        console.log(currentPos[field] )
         this.refs[field].goToAndPause(currentPos[field]);
     }
 
-    console.log(this.refs[field])
 }   
 
 render()

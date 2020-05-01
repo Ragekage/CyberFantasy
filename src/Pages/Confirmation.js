@@ -15,12 +15,11 @@ constructor(props)
 
     
 
-    console.log(props.match.params.confirmId)
 }
 
 
 componentDidMount(){
-    this.performConfirmationCheck(this.props.match.params.confirmId)
+    this.performConfirmationCheck(this.props.route.match.params.confirmId)
 
 }
 
@@ -33,7 +32,8 @@ performConfirmationCheck(confirmId){
 
 render(){
 
-    
+    if(this.props.FullMediaQuery.isTabletOrMobileDevice === false)
+    {
     if(this.state.result === "")
     {
         return(
@@ -69,7 +69,31 @@ render(){
     Confirmation
     </div>
     )
-}
+    }
+    else
+    {
+        if(this.state.result === "")
+        {
+            return (<div className="ConfirmationMainM">
+                Loading Confirmation
+            </div>)
+        }
+        else if(this.state.result === "failed")
+        {
+            return(<div className="ConfirmationMainM">
+                Error With request
+            </div>)
+        }
+        else if(this.state.result === "confirmed")
+        {
+            return(
+                <div className="ConfirmationMainM">
+                    Email Has Been Confirmed
+                </div>
+            )
+        }
+
+    }}
 
 }
 

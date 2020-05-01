@@ -7,8 +7,9 @@ import Confirmation from './Pages/Confirmation'
 import LoginRegister from './Pages/LoginRegister'
 import CreatePlayer from './Pages/CreatePlayer'
 import {PrivateRoute} from './Utilities/AuthService'
+import {useMediaQuery} from 'react-responsive'
 
-import {BrowserRouter as Router, Redirect, Switch, Route} from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Switch, Route, useHistory} from "react-router-dom";
 
 
 
@@ -16,25 +17,39 @@ function App() {
 
 
 // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
-
-
+const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 });
+const isBigScreen = useMediaQuery({ minDeviceWidth: 1824 });
+const isTabletOrMobile = useMediaQuery({ maxWidth: 1224 });
+const isTabletOrMobileDevice = useMediaQuery({ maxDeviceWidth: 1224 });
+const isPortrait = useMediaQuery({ orientation: 'portrait' });
+const isRetina = useMediaQuery({ minResolution: '2dppx' });
+const FullMediaQuery = {
+  isDesktopOrLaptop: isDesktopOrLaptop,
+  isBigScreen: isBigScreen,
+  isTabletOrMobile: isTabletOrMobile,
+  isTabletOrMobileDevice: isTabletOrMobileDevice,
+  isPortrait: isPortrait,
+  isRetina: isRetina
+}
+console.log(FullMediaQuery)
   
   return (
-    <Router>
-    <div className="App-header">
+    <Router state={"heelo"} >
+    <div className="AppMain">
         <Switch>
         <Redirect exact from="/" to="/mainhub" />
-        <Route path="/welcome">
-          <LoginRegister/>
-        </Route>
-        <Route path="/login">
-          <Login/>
-        </Route>
-        <Route path="/register" component={Register} />
-        <Route path="/confirmation/:confirmId" component={Confirmation} />
-        <Route path="/createplayer" component={CreatePlayer}/>
+         
+        <Route path="/welcome" render={() => <LoginRegister FullMediaQuery={FullMediaQuery}/>}/>
+     
+        <Route path="/login" render={(render) => (<Login route={render} FullMediaQuery={FullMediaQuery}/>)}/>
+        
+        <Route path="/register"  render={(render) => (<Register route={render} FullMediaQuery={FullMediaQuery}/>)}/>
+        <Route path="/confirmation/:confirmId" render={(render) => (<Confirmation route={render} FullMediaQuery={FullMediaQuery}/>)} />
+        <Route path="/createplayer" render={(render) => (<CreatePlayer rote={render} FullMediaQuery={FullMediaQuery}/>)}/>
+
         <PrivateRoute path="/mainhub">
-          <MainHub/>
+          <MainHub FullMediaQuery={FullMediaQuery}/>
+
         </PrivateRoute>
         </Switch>
     </div>

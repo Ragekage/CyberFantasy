@@ -4,8 +4,6 @@ axios.defaults.baseURL = 'https://cybersunset-api.herokuapp.com';
 export const callBackendAPI = async () => {
 const response = await fetch('/dbtest');
 const body = await response.json();
-console.log(response)
-console.log(body)
 if (response.status !== 200) {
 throw Error(body.message) 
 }
@@ -17,11 +15,9 @@ var response = axios.post('/createuser', {
    postData
   })
   .then(function (response) {
-    console.log(response);
     return response.result
   })
   .catch(function (error) {
-    console.log(error);
     return response.result
   });
 
@@ -29,15 +25,12 @@ var response = axios.post('/createuser', {
 }
 
 export async function createPlayer(postData){
-  console.log(postData)
   var response = await axios.post('/createnewplayer', {
     postData
   }).then(function(response) {
-    console.log(response);
     return response.data.response
   })
   .catch(function(error) {
-    console.log(error)
     return error
   })
 
@@ -46,10 +39,8 @@ return response
 
 export async function checkPlayerName(name){
   var response = await axios.get('/checkplayer/' + name).then(function(response){
-    console.log(response)
     return response.data.response
   }).catch(function(error) {
-    console.log(error)
     return error
   })
 
@@ -58,10 +49,8 @@ export async function checkPlayerName(name){
 
 export async function checkForPlayer(id){
   var response = await axios.get('/checkforplayer/' + id).then(function(response) {
-    console.log(response)
     return response.data.response
   }).catch(function(error) {
-    console.log(error)
     return error
   })
 
@@ -72,11 +61,9 @@ export async function confirmCheck(confirmId){
   var response = axios.post('/confirmcheck', {
     confirmId
   }).then(response => {
-    console.log(response)
     return response
   })
   .catch(error => {
-    console.log(error)
   })
 return response
 }
@@ -86,11 +73,9 @@ export async function emailUserCheck(postData){
      postData
     })
     .then(response => {
-      console.log(response);
       return response.data
     })
     .catch(error => {
-      console.log(error);
       return error
     });
 
@@ -101,13 +86,11 @@ export async function checkUser(userData) {
 var response = await axios.post('/checkuser', {
    userData
   }).then(response => {
-        console.log(response);
 
         return response.data;
    
     })
     .catch(error => {
-      console.log(error);
 
        return error
     });

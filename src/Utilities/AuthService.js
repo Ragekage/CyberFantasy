@@ -33,12 +33,10 @@ export function PrivateRoute({ children, ...rest }) {
 }
 
 export function LoginButton( props) {
-    console.log( props);
     let history = useHistory();
     let location = useLocation();
     let { from } = location.state || { from: { pathname: "/mainhub" } };
     let login = (userData, callback) => {
-      console.log(userData)
       Auth.setUserdata(userData, callback)
       Auth.authenticate(() => {
         if(Auth.newPlayer === true)
@@ -75,13 +73,11 @@ export const Auth = {
  
 
   authenticate(cb) {
-    console.log(this.userData)
     checkUser(this.userData).then(response => {
       if(response.players === "Password Accepted")
       {
-        console.log(response)
         checkForPlayer(response.response[0].Id).then(response => {
-          if(response.response === "exists")
+          if(response === "exists")
           {
             Auth.newPlayer = false
             Auth.isAuthenticated = true;
@@ -93,7 +89,6 @@ export const Auth = {
             setTimeout(cb, 100); // fake async
           }
         }).catch(error => {
-          console.log(error)
         })
       }
       else
@@ -101,7 +96,6 @@ export const Auth = {
         this.callback(response.players)
       }
     }).catch(error => {
-      console.log(error)
     })
   },
 

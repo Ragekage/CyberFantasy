@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { Form, FormGroup, FormFeedback, Button, Input, Modal, ModalBody} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CreateWindow from '../Images/BattleWindow.png'
+
 import {createPlayer, checkPlayerName} from '../Utilities/ServerEndpoints'
 import CharacterBuilder from '../CharacterCreator/CharacterBuilder'
 
@@ -11,7 +12,9 @@ class CreatePlayer extends Component {
 
 constructor(props){
  super(props)   
- console.log(props)
+
+ 
+console.log(props)
     this.state = {
         playerDetails: {
             name: "",
@@ -36,7 +39,6 @@ onChange = (e) => {
 
 plusMinus = (area, direction) => {
     var player = this.state.playerDetails
-    console.log(this.refs.playerProfile.getSpriteProfile())
     if(player.givenPoints > 0)
     {
         if(direction === "add")
@@ -105,7 +107,6 @@ createNewPlayer = () => {
     else
     {
     checkPlayerName(player.name).then( response => {
-        console.log(response)
         if(response === "already exists")
         {
             this.setNameInvalid()
@@ -159,7 +160,8 @@ displayError = () => {
 
 render()
 {
-    console.log(this.state.playerDetails)
+    if(this.props.FullMediaQuery.isTabletOrMobileDevice === false)
+    {
     return(
         <div className="createPlayerMain">
         <img src={CreateWindow} width={1260} height={900}></img>
@@ -172,14 +174,14 @@ render()
             <FormFeedback>Name Exists</FormFeedback>
             </FormGroup>
             <FormGroup className="givePoints">
-            <div>{this.state.playerDetails.givenPoints} Points</div>
-            <div>{this.plusMinusRender("STR")} STR</div>
-            <div>{this.plusMinusRender("INT")} INT</div>
-            <div>{this.plusMinusRender("STM")} STM</div>
-            <div>{this.plusMinusRender("STL")} STL</div>
+            <div style={{marginLeft: 85}}>{this.state.playerDetails.givenPoints} Points</div>
+            <div style={{display: "inline-flex"}}> STR {this.plusMinusRender("STR")} </div>
+            <div style={{display: "inline-flex"}}> INT{this.plusMinusRender("INT")} </div>
+            <div style={{display: "inline-flex"}}> STM {this.plusMinusRender("STM")}</div>
+            <div style={{display: "inline-flex"}}> STL {this.plusMinusRender("STL")} </div>
             </FormGroup>
             <FormGroup className="CreatePlayerSaveB" >
-            <Button invalid={true} style={{fontSize: 20}}   onClick={this.createNewPlayer} className="CreatePlayerSaveB">Save</Button>
+            <Button invalid={true} style={{fontSize: 30}}   onClick={this.createNewPlayer} className="CreatePlayerSaveB">Save</Button>
             <div style={{transform: "translate(340px, -1010px)", display: this.displayError(), color: "red", fontSize: "25px"}} >Please use all points</div>
             </FormGroup>
         </Form>
@@ -192,7 +194,14 @@ render()
         </Modal>
         </div>
     )
-}
+    }
+    else
+    {
+        return(
+            <div className="CreateCharacterMainM">Apologise the character creator is not currently available for mobile. :(</div>
+        )
+
+    }}
 
 
 

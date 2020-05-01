@@ -9,16 +9,42 @@ import MainMenuSound from '../Sounds/keys-of-moon-eclipse.mp3'
 
 class LoginRegister extends Component {
 
-   
+    constructor(props)
+    {
+        super(props)
+        console.log(props)
+
+        this.isMobile = props.FullMediaQuery.isTabletOrMobileDevice
+    }
+
+
+    componentDidMount(){
+       
+    }
+
+    checkPortrait = () => {
+        if(this.props.FullMediaQuery.isPortrait === true)
+        {
+            return "p"
+        }
+        else
+        {
+            return "nonp"
+        }
+    }
+    
 
     render()
     {
+        if(this.props.FullMediaQuery.isTabletOrMobileDevice === false)
+        {
+      console.log(this.isMobile)
         return(
             <div>
             <div  className="LoginWindow">
 
                 <div className="TitleImage">
-                <Spritesheet image={MainMenupic} widthFrame={1024} heightFrame={512} steps={2} fps={2} loop={true} />
+                <Spritesheet style={{width: "40vw", marginLeft: "auto", marginRight: "auto", paddingTop: "5vh"}}  image={MainMenupic} widthFrame={1024} heightFrame={512} steps={2} fps={2} loop={true} />
                 {/* <CardImg src={MainMenupic} /> */}
                 </div>
                 <div className="LoginRegisterBtns">
@@ -27,11 +53,25 @@ class LoginRegister extends Component {
                         <div className="divider"/>
                         <Link style={{fontSize: 30}} to="/register" className="btn btn-primary">Register</Link>
                 </div>
-                <audio className="mainAudio" controls loop src={MainMenuSound} autoPlay></audio>
+                <div className="Audiodiv"><audio className="mainAudio" controls loop src={MainMenuSound} autoPlay></audio></div>
             </div>
-            <div className="BGImage"><img src={MMPic}></img></div>
+            {/* <div className="BGImage"><img width="100%" height="100%" src={MMPic}></img></div> */}
             </div>
         )
+        }
+        else
+        {
+            return(
+                <div className="LoginRegisterMainM">
+                <div className="BGImageM"><Spritesheet style={{width: "100vw"}}  image={MainMenupic} widthFrame={1024} heightFrame={512} steps={2} fps={2} loop={true} /></div>
+                <div className={"LoginRegisterM" + this.checkPortrait()}>
+                <Link style={{fontSize: 30}} to="/login" className="btn btn-primary">Login</Link>
+                        <div className="divider"/>
+                <Link style={{fontSize: 30}} to="/register" className="btn btn-primary">Register</Link>
+                </div>    
+                </div>
+            )
+        }
     }
 
 }

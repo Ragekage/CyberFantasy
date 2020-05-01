@@ -14,7 +14,11 @@
 }
 
 
+.AppMain{
+  background-color: #282c34;
+  font-family: 'Mode Seven';
 
+}
 
 .App-header {
   background-color: #282c34;

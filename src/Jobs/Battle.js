@@ -109,7 +109,6 @@ doDamage = () => {
             this.setState({currentAnimation: 2},)
 
             this.refs.battleSprite.goToAndPlay(1)
-                console.log(this.refs.battleSprite)
 
         }
         else
@@ -122,7 +121,6 @@ doDamage = () => {
             else
             {
                 currentEnemyId = currentEnemyId + 1
-                console.log(currentEnemyId)
                 this.setState({enemyDie: true, damagePrompt: false, currentAnimation: 1, currentlyFightingId: currentEnemyId })
                  this.refs.battleSprite.goToAndPlay(1)
 
@@ -188,7 +186,6 @@ return animations[this.state.currentAnimation].animation
 fightPrompt = () => {
     if(this.state.fightPrompt === true)
     {
-        console.log(this.state.currentlyFightingId)
     return(
         <div className="battleMenu">
         {/* <img width={1025} height={628} src={BattleWindowTemplate}></img> */}
@@ -221,7 +218,6 @@ finalStats = () => {
 
 render()
 {
-    console.log(this.state.currentlyFightingId, this.state.animations)
     return(
         <div style={{fontFamily: "Mode Seven"}}>
         {this.fightPrompt()}

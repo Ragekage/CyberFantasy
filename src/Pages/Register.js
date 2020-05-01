@@ -7,7 +7,7 @@ class Register extends Component {
 
 constructor(props){
     super(props)
-    console.log(props.history)
+   
     this.state ={
             email: '',
             password: '',
@@ -37,7 +37,6 @@ validateField(fieldName, value) {
     switch(fieldName) {
       case 'email':
         emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) !== null;
-        console.log(emailValid)
         fieldValidationErrors.email = emailValid ? '' : ' is invalid';
         break;
       case 'password':
@@ -68,7 +67,6 @@ validateField(fieldName, value) {
 
 
  register = () =>{
-   console.log(this.state.username)
   var userData = {
     username: this.state.username,
     email: this.state.email,
@@ -76,7 +74,6 @@ validateField(fieldName, value) {
   }
 
   emailUserCheck(userData).then(response => {
-    console.log(response)
     if(response.data === "exists")
     {
       this.setState({invalidData: true})
@@ -87,7 +84,6 @@ validateField(fieldName, value) {
     else
     {
       createUser(userData).then(response => {
-        console.log("User created")
         this.setState({validData: true}, this.sendUserToWelcome())
       })
     }
@@ -96,13 +92,15 @@ validateField(fieldName, value) {
 
  sendUserToWelcome = () => {
    setTimeout(() => {
-     this.props.history.push('/welcome')
+     this.props.route.history.push('/welcome')
    },3000)
  }
 
 
     render(){
-      console.log(this.state.username)
+      console.log(this.props)
+      if(this.props.FullMediaQuery.isTabletOrMobileDevice === false)
+      {
         return(
         <div className="LoginWindow">
         <Card style={{backgroundColor: "rgba(111, 111, 111, 0)", border: "0px"}}>
@@ -133,6 +131,35 @@ validateField(fieldName, value) {
         </Card>
         </div>
         )}
+        else
+        {
+          return(
+            <div className="LoginMainM">
+                <div className="LoginFormM">
+                    <Form>
+                        <FormGroup >
+                            <Input invalid={this.errorClass(this.state.formErrors.username)}  valid={this.state.username.length === 0 ? false : !this.errorClass(this.state.formErrors.username)} onChange={e => this.handleUserInput(e)}  type="username" name="username" id="username" placeholder="Enter Username"></Input>
+                            <FormFeedback style={{position: "fixed"}}>invalid Username</FormFeedback>
+                        </FormGroup>
+                        <FormGroup style={{paddingTop: 15}}>
+                            <Input invalid={this.errorClass(this.state.formErrors.email)} valid={this.state.email.length === 0 ? false : !this.errorClass(this.state.formErrors.email)} onChange={e => this.handleUserInput(e)} type="email" name="email" id="Email" placeholder="Enter Email" ></Input>
+                            <FormFeedback style={{position: "fixed"}}>Invalid Email</FormFeedback>
+                        </FormGroup>
+                        <FormGroup style={{paddingTop: 15}}>
+                            <Input invalid={this.errorClass(this.state.formErrors.password)}  valid={this.state.password.length === 0 ? false : !this.errorClass(this.state.formErrors.password)} onChange={e => this.handleUserInput(e)}  type="password" name="password" id="Password" placeholder="Enter Password"></Input>
+                            <FormFeedback style={{position: "fixed"}}>invalid Password</FormFeedback>
+                        </FormGroup>
+                    </Form>
+                    {this.state.invalidData === true && (<div style={{color: "red", position: "fixed"}}>Username, Email already Exists</div>)}
+                    {this.state.validData === true && (<div  style={{color: "red", position: "fixed"}}>Check Your Email to Confirm</div>)}
+                 <div className="LoginButtonsM">   
+                 <div className="OkBtnM" ><Button style={{fontSize: 30}} className="btn btn-primary" onClick={this.register}>Register</Button></div>
+                 <div className="CancelBtnM"><Link style={{fontSize: 30}} to="/welcome" className="btn btn-primary">Cancel</Link></div>
+                 </div>
+                </div>
+            </div>
+          )
+        }}
 }
 
 export default Register
