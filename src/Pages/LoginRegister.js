@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Card, Form, FormGroup, FormFeedback, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Input} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './Login.css'
+import {welcome} from '../Utilities/ServerEndpoints'
 import Spritesheet from 'react-responsive-spritesheet'
 import MainMenupic from '../Images/CyberSunsetAnimated.png'
 import MMPic from '../Images/CyberSunsetBGNEW.gif'
@@ -19,7 +20,7 @@ class LoginRegister extends Component {
 
 
     componentDidMount(){
-       
+       welcome()
     }
 
     checkPortrait = () => {

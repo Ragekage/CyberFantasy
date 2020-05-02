@@ -24,6 +24,11 @@ var response = axios.post('/createuser', {
   return response
 }
 
+export function welcome(){
+
+    axios.get('/welcome')
+}
+
 export async function createPlayer(postData){
   var response = await axios.post('/createnewplayer', {
     postData

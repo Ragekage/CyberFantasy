@@ -58,7 +58,7 @@ render(){
         return(
             <div className="confirmationWindow">
             <img width={1024} height={600} src={battleWindow}></img>
-              <div style={{transform: "translate(150px, -500px)", fontSize: 40}}>  Succsessfully Confirmed Email!</div>
+              <div style={{transform: "translate(150px, -500px)", fontSize: 40}}>  Successfully Confirmed Email!</div>
                 <Link style={{transform: "translate(425px, -250px)", fontSize: 60}} to="/welcome" className="btn btn-primary">Ok</Link>
 
             </div>

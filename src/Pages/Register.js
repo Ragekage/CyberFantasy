@@ -124,7 +124,7 @@ validateField(fieldName, value) {
                 {this.state.invalidData === true && (<div className="errorMsg" style={{color: "red", position: "fixed"}}>Username, Email already Exists</div>)}
                 {this.state.validData === true && (<div className="errorMsg" style={{color: "red", position: "fixed"}}>Check Your Email to Confirm</div>)}
 
-             <div className="RegisterBtn"><Button onClick={this.register}>Register</Button></div>
+             <div className="RegisterBtn"><button className="btn btn-primary" onClick={this.register}>Register</button></div>
              <div className="RegisterCancelBtn"><Link style={{fontSize: 30}} to="/welcome" className="btn btn-primary">Cancel</Link></div>
             </div>
             </CardBody>
@@ -153,7 +153,7 @@ validateField(fieldName, value) {
                     {this.state.invalidData === true && (<div style={{color: "red", position: "fixed"}}>Username, Email already Exists</div>)}
                     {this.state.validData === true && (<div  style={{color: "red", position: "fixed"}}>Check Your Email to Confirm</div>)}
                  <div className="LoginButtonsM">   
-                 <div className="OkBtnM" ><Button style={{fontSize: 30}} className="btn btn-primary" onClick={this.register}>Register</Button></div>
+                 <div className="OkBtnM" ><button style={{fontSize: 30}} className="btn btn-primary" onClick={this.register}>Register</button></div>
                  <div className="CancelBtnM"><Link style={{fontSize: 30}} to="/welcome" className="btn btn-primary">Cancel</Link></div>
                  </div>
                 </div>
