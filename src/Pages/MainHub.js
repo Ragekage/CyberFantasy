@@ -85,8 +85,9 @@ class MainHub extends Component {
     }
     else
     {
-      return(<div>
+      return(<div style={{color: "white"}}>
         Sorry Not Currently Available On Mobile
+        <LogoutButton/>
       </div>)
     }
   }
