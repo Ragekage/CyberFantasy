@@ -11,8 +11,9 @@ import MissionBoard from '../Jobs/MissionBoard';
 
 class MainHub extends Component {
 
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
+  
     this.state = {
         PlayerStats:{
             Name: "Kade",
@@ -79,7 +80,8 @@ class MainHub extends Component {
           </div>
         
           </div>
-        )}
+        )
+      }
     }
     else
     {
@@ -87,6 +89,7 @@ class MainHub extends Component {
         Sorry Not Currently Available On Mobile
       </div>)
     }
+  }
 }
 
 export default MainHub
