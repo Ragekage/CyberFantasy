@@ -54,7 +54,8 @@ class MainHub extends Component {
 
 
     render(){
-
+      if(this.props.FullMediaQuery.isTabletOrMobileDevice === false)
+      {
       if(this.state.player === null)
       {
         return(<div>
@@ -79,6 +80,12 @@ class MainHub extends Component {
         
           </div>
         )}
+    }
+    else
+    {
+      return(<div>
+        Sorry Not Currently Available On Mobile
+      </div>)
     }
 }
 
