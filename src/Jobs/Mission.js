@@ -29,6 +29,7 @@ this.state = {
     MissionNames: ["Find Gang Info", "Kill Leader",  "Back Up", "Drive by", "Fuck them up"],
     toggleModal: false,
     expiryTime: this.setInitalExpiry(props.Mission.MissionStats.ExpiresAt),
+    expired: false
 }
 
 
@@ -45,12 +46,21 @@ fight = () => {
 
 setInitalExpiry(expiresAt){
     var diff = 30
+    var expired = false
     var d = new Date(expiresAt)
 
     var today = new Date()
     var expires = new Date(d.getTime() + diff*60000)
-
-    return this.diffMinutes(today, expires)
+    console.log(today, expires, this.diffMinutes(today, expires))
+    if(today > expires)
+    {
+        expired = true
+    }
+    else
+    {
+        expired = false
+    }
+    return expired === true? 0 : this.diffMinutes(today, expires)
 }
 
 componentWillReceiveProps(props){
@@ -61,7 +71,7 @@ componentWillReceiveProps(props){
 }
 
 componentDidMount(){
-    if(this.state.expiryTime <= 1)
+    if(this.state.expiryTime === 0)
     {
         this.props.Rebuild(this.props.Mission.MissionStats.Id, this.props.Player.current.props.PlayerStats.Id, this.props.ArrayId)
     }
