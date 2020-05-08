@@ -4,7 +4,12 @@ import './MissionStyles.css';
 import Enemy from './Enemy';
 import Battle from './Battle';
 import MissionCardTemplate from '../Images/MissionCard.png'
+import {missionBuilder} from './missionBuilder'
 
+Date.prototype.addHours = function(h){
+    this.setHours(this.getHours()+h);
+    return this;
+}
 
 class Mission extends Component {
 
@@ -12,31 +17,24 @@ constructor(props)
 {
 super(props)
 
-this.state = {
-    MissionStats: {
-        DIFFICULTY: 0,
-        TYPES: [],
-        CASHGAIN: 0,
-        EXPGAIN: 0,
-        Favours: "",
-        Name: "",
-    },
 
-    baseMissionStats: {
-        DIFFICULTY: 0,
-        TYPES: [],
-        CASHGAIN: 0,
-        EXPGAIN: 0,
-        Favours: "",
-        Name: ""
-    },
+
+this.state = {
+    MissionStats: props.Mission.MissionStats,
+
+  
     MissionInfo: [],
-    Enemies: [],
+    Enemies: props.Mission.Enemies,
     MissionInfoReady: false,
     MissionNames: ["Find Gang Info", "Kill Leader",  "Back Up", "Drive by", "Fuck them up"],
     toggleModal: false,
+    expiryTime: this.setInitalExpiry(props.Mission.MissionStats.ExpiresAt),
 }
+
+
 }
+
+
 
 fight = () => {
     // var damage = this.props.Mission.difficulty * 10
@@ -45,76 +43,50 @@ fight = () => {
     this.toggleModal()
 }
 
-componentDidMount(){
-   
-    this.buildMission()
+setInitalExpiry(expiresAt){
+    var diff = 30
+    var d = new Date(expiresAt)
+
+    var today = new Date()
+    var expires = new Date(d.getTime() + diff*60000)
+
+    return this.diffMinutes(today, expires)
 }
 
-buildMission = () => {
-    var random = Math.random();
-    var randomMissionName = Math.random();
-    var missionNames = this.state.MissionNames
-    randomMissionName = Math.floor(randomMissionName * this.state.MissionNames.length)
-    var Enemies = [];
-    var MissionStats = {
-        DIFFICULTY: 0,
-        TYPES: [],
-        CASHGAIN: 0,
-        EXPGAIN: 0,
-        Favours: "",
-        Name: "",
-    }
-    
-    random = Math.floor(random * 4) + 1;
-    var check
-    for( check = 0; check <= random; check++)
+componentWillReceiveProps(props){
+    if(this.state.MissionStats !== props.Mission)
     {
-        var newEnemy = new Enemy();
-        MissionStats.DIFFICULTY = MissionStats.DIFFICULTY + newEnemy.difficulty;
-        MissionStats.CASHGAIN = MissionStats.CASHGAIN + newEnemy.EnemyStats.CashGained;
-        MissionStats.EXPGAIN = MissionStats.EXPGAIN + newEnemy.EnemyStats.ExpGained;
-        MissionStats.Name = missionNames[randomMissionName]
-        MissionStats.TYPES.push(newEnemy.EnemyStats.Type)
-        Enemies.push(newEnemy);
-
+        this.setState({MissionStats: props.Mission.MissionStats, Enemies: props.Mission.Enemies, expiryTime: this.setInitalExpiry(props.Mission.MissionStats.ExpiresAt)})
     }
-
-    this.calculateMissionFavours(MissionStats)
-
-    this.setState({Enemies: Enemies, MissionInfoReady: true})
 }
+
+componentDidMount(){
+    if(this.state.expiryTime <= 1)
+    {
+        this.props.Rebuild(this.props.Mission.MissionStats.Id, this.props.Player.current.props.PlayerStats.Id, this.props.ArrayId)
+    }
+    // var diff = 30
+    // var d = new Date(this.props.Mission.MissionStats.ExpiresAt)
+
+    // var today = new Date()
+    // var expires = new Date(d.getTime() + diff*60000)
+    this.interval = setInterval(() => this.setState({expiryTime: this.setInitalExpiry(this.props.Mission.MissionStats.ExpiresAt)}), 30000)
+
+
+    // this.buildMission()
+}
+
+componentWillUnmount(){
+    clearInterval(this.interval)
+}
+
+
 
 toggleModal = () => {
     this.setState({toggleModal: !this.state.toggleModal})
 }
 
-calculateMissionFavours = (stats) => {
-    if(stats.TYPES.length > 0)
-    {
-        var RangeAmount = stats.TYPES.filter(type => type === "ranged")
-        var MeleeAmount = stats.TYPES.filter(type => type === "melee")
-        var CommonAmount = stats.TYPES.filter(type => type === "common")
 
-        if(RangeAmount.length > MeleeAmount.length && RangeAmount.length > CommonAmount.length)
-        {
-            stats.Favours = "Ranged"
-        }
-        else if (MeleeAmount.length > RangeAmount.length && MeleeAmount.length > CommonAmount.length)
-        {
-            stats.Favours = "Melee"
-        }
-        else if (CommonAmount.length > RangeAmount.length && CommonAmount.length > MeleeAmount.length)
-        {
-            stats.Favours = "Common"
-        }
-        else
-        {
-            stats.Favours = "Mixed"
-        }
-
-        this.setState({MissionStats: stats})
-    }
-}
 
 MissionInfoCallBack = () => {
 
@@ -140,21 +112,29 @@ difficultyLevel = (difficulty) => {
     }
 }
 
-renderMissionInfo = () => {
-if(this.state.MissionInfoReady === true)
-{
+diffMinutes(time1, time2){
+    var diff = (time1.getTime() - time2.getTime())
+    diff /= 60000;
+    return Math.abs(Math.round(diff))
+}
+
+
+renderMissionInfo = (Mission) => {
+
     return(
-        <div className="MissionInfo" style={{color: "black"}}>
-        <p>{this.state.MissionStats.Name}</p>
-        <p> Difficulty: {this.difficultyLevel(this.state.MissionStats.DIFFICULTY)}</p>
-        <p> Favours: {this.state.MissionStats.Favours}</p>
-        <p> CashGain: {this.state.MissionStats.CASHGAIN}</p>
-        <p> Exp: {this.state.MissionStats.EXPGAIN}</p>
+        <div className="MissionInfo" style={{color: "white"}}>
+        <p>{Mission.Name}</p>
+        <p> Difficulty: {this.difficultyLevel(Mission.DIFFICULTY)}</p>
+        <p> Favours: {Mission.Favours}</p>
+        <p> CashGain: {Mission.CASHGAIN}</p>
+        <p> Exp: {Mission.EXPGAIN}</p>
+        <p> Expires: {this.state.expiryTime} Mins</p>
+        {/* <Button onClick={() => this.props.Rebuild(this.props.Mission.MissionStats.Id, this.props.Player.current.props.PlayerStats.Id, this.props.ArrayId)}>rebuild</Button> */}
         <Button onClick={() => this.fight()}>Fight</Button>
-        <Button onClick={this.buildMission}>Refresh</Button>
+        {/* <Button onClick={this.buildMission}>Refresh</Button> */}
         </div>
     )
-}
+
 }
 
 renderEnemies = () => {
@@ -173,8 +153,8 @@ renderEnemies = () => {
         return(
             <div >
                 <div className="Mission">
-                {this.renderMissionInfo()}
-                <img width={382} height={436} src={MissionCardTemplate}></img>
+                {this.renderMissionInfo(this.state.MissionStats)}
+                {/* <img width={382} height={436} src={MissionCardTemplate}></img> */}
                 </div>
             <Modal className="battleModal"  size="lg" isOpen={this.state.toggleModal}>
                 <ModalBody >

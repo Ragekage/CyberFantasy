@@ -3,24 +3,31 @@
 class Enemy  {
 
 
-constructor(){
+constructor(preStats){
+  
+    this.difficulty = this.getDifficulty()    
 
-    var stats = { Health: 0,
+    var stats = {
+        Name: this.createEnemyName(),
+        Health: 0,
         ExpGained: 0,
         CashGained: 0,
         WeaponAttack: 0,
         MeleeAttack: 0,
         Type: "",
-        }
+        Difficulty: this.difficulty
+        } 
 
     this.isDead = false;
      
-    this.difficulty = this.getDifficulty()    
     this.types = ["ranged", "melee", "common"]
     this.lvl = 2
 
-    this.EnemyStats = this.buildNewEnemy(stats, this.types, this.lvl, this.difficulty)
-}
+    this.EnemyStats = preStats === undefined ? this.buildNewEnemy(stats, this.types, this.lvl, this.difficulty) : preStats
+    }
+
+  
+
 
 get Stats(){
     return this.enemyStats
@@ -30,6 +37,13 @@ get hi(){
    return "hi"
 }
 
+createEnemyName(){
+    var Names = ["frank", "john", "billy", "trevor", "harry", "percy", "morpheus", "neo", "zues", "kunkka", "peter", "joe"];
+    var randomEnemyName = Math.random();
+    randomEnemyName = Math.floor(randomEnemyName * Names.length);
+
+    return Names[randomEnemyName]
+}
 
  doDamage(damage){
    var stats = this.EnemyStats

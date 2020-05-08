@@ -1,24 +1,33 @@
-.MissionCard{
+/* .MissionCard{
     border: 2px solid cornflowerblue;
     background-color: lightskyblue;
     border-radius: 5px;
     text-align: center;
     padding: 5px;
 }
+*/
 
 .MissionInfo{
-    font-size: 20px;
-    transform: translate(90px, 350px);
-
+    font-size: 25px;
+    z-index: 100;
+    text-align: center;
+    padding-top: 10vh;
+    
 }
+
+/*
 
 .MissionInfo Button{
     margin-left: 10px;
 }
 
+*/
 .Mission{
-    transform: translate(50px, -1170px);
-
+  background-color: #282c34;
+  height: 60vh;
+  background-image: url('../Images/MissionCard.png');
+  background-repeat: no-repeat;
+  background-size: 25vw 53vh;
 }
 
 
@@ -68,10 +77,14 @@
     border: 0px;
 }
 
+
 .MissionBoard{
-    display: flex;
-    transform: translate(400px, 0px);
+  width: 76vw;
+  float: right;
+  display: flex;
+  height: 100vh;
 }
+
 
 .typewriter p{
     border-right: .15em solid green;
@@ -83,7 +96,7 @@
   }
 
   .typewriter p:nth-child(1) {
-    width: 17rem;
+    width: 17.5rem;
     -webkit-animation: type 2s steps(40, end);
     animation: type 2s steps(40, end);
     -webkit-animation-fill-mode: forwards;
@@ -160,7 +173,7 @@
       opacity: 1;
       border: none;
     }
-  }
+  } 
   
   /* @keyframes type3 {
     0% {

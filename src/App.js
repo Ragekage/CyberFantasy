@@ -31,7 +31,6 @@ const FullMediaQuery = {
   isPortrait: isPortrait,
   isRetina: isRetina
 }
-console.log(FullMediaQuery)
   
   return (
     <Router state={"heelo"} >
@@ -45,7 +44,7 @@ console.log(FullMediaQuery)
         
         <Route path="/register"  render={(render) => (<Register route={render} FullMediaQuery={FullMediaQuery}/>)}/>
         <Route path="/confirmation/:confirmId" render={(render) => (<Confirmation route={render} FullMediaQuery={FullMediaQuery}/>)} />
-        <Route path="/createplayer" render={(render) => (<CreatePlayer rote={render} FullMediaQuery={FullMediaQuery}/>)}/>
+        <Route path="/createplayer" render={(render) => (<CreatePlayer route={render} FullMediaQuery={FullMediaQuery}/>)}/>
 
         <PrivateRoute path="/mainhub">
           <MainHub FullMediaQuery={FullMediaQuery}/>

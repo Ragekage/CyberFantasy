@@ -13,7 +13,6 @@ class LoginRegister extends Component {
     constructor(props)
     {
         super(props)
-        console.log(props)
 
         this.isMobile = props.FullMediaQuery.isTabletOrMobileDevice
     }
@@ -39,7 +38,6 @@ class LoginRegister extends Component {
     {
         if(this.props.FullMediaQuery.isTabletOrMobileDevice === false)
         {
-      console.log(this.isMobile)
         return(
             <div>
             <div  className="LoginWindow">

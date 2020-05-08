@@ -12,7 +12,16 @@ import {
 
   import {Button} from 'reactstrap'
 
+
+  Date.prototype.addHours = function(h){
+    this.setHours(this.getHours()+h);
+    return this;
+}
+
 export function PrivateRoute({ children, ...rest }) {
+
+  Auth.checkForLogin()
+
   return (
     <Route
       {...rest}
@@ -58,6 +67,22 @@ export function LoginButton( props) {
     );
   }
 
+  export function LogoutButton(){
+    let history = useHistory();
+    let location = useLocation();
+    let { from } = location.state || { from: { pathname: "/welcome" } };
+    let logout = () => {
+      Auth.logOut()
+      history.replace(from)
+    }
+
+    return (
+      <div style={{height: "50px", width: "120px", backgroundColor: "#282c34", transform: "translate(1750px, -70px)"}}>
+          <Button  onClick={() => logout()} color="primary">Sign Out</Button>
+      </div>
+    );
+  }
+
 export const Auth = {
   isAuthenticated: false,
   userData: {},
@@ -70,21 +95,49 @@ export const Auth = {
     this.callback = callback
   },
 
- 
+  checkForLogin(){
+    const user = JSON.parse(localStorage.getItem('userDetail'))
+    if(user !== null)
+    {
+      var currentDate = new Date()
+      var expiredDate = new Date(user.LoggedIn).addHours(1)
+
+      if(currentDate > expiredDate)
+      {
+        Auth.isAuthenticated = false;
+      }
+      else
+      {
+      if(user.isLoggedIn === true)
+      {
+        Auth.isAuthenticated = true;
+      }
+      }
+    }
+  },
+
+  logOut(){
+    Auth.isAuthenticated = false;
+    localStorage.removeItem('userDetail')
+  },
 
   authenticate(cb) {
     checkUser(this.userData).then(response => {
       if(response.players === "Password Accepted")
       {
+        var player = response.response[0]
         checkForPlayer(response.response[0].Id).then(response => {
-          if(response === "exists")
+          if(response.response === "exists")
           {
+            var currentTime = new Date()
             Auth.newPlayer = false
             Auth.isAuthenticated = true;
+            localStorage.setItem('userDetail', JSON.stringify({user: player.Username, isLoggedIn: true, id: player.Id, LoggedIn: currentTime}))
             setTimeout(cb, 100); // fake async
           }
           else
           {
+            localStorage.setItem('userDetail', JSON.stringify({user: player.Username, isLoggedIn: true, id: player.Id, LoggedIn: currentTime}))
             Auth.isAuthenticated = true;
             setTimeout(cb, 100); // fake async
           }

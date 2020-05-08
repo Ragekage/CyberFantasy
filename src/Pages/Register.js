@@ -98,7 +98,6 @@ validateField(fieldName, value) {
 
 
     render(){
-      console.log(this.props)
       if(this.props.FullMediaQuery.isTabletOrMobileDevice === false)
       {
         return(

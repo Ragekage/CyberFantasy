@@ -12,9 +12,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class CharacterBuilder extends Component {
 
-constructor()
+constructor(props)
 {
-    super()
+    super(props)
 
     this.state = {
         bodyArray: [1,2,3,4,5,6],
@@ -23,16 +23,41 @@ constructor()
         headArray: [1,2,3,4,5,6],
         faceArray: [1,2,3,4,5,6],
         spritePos: {
-            bodyPos: 2,
-            eyePos: 2,
-            hairPos: 2,
-            headPos: 2,
-            facePos: 2,
+            bodyPos: 1,
+            eyePos: 1,
+            hairPos: 1,
+            headPos: 1,
+            facePos: 1,
         },
 
         testImage: ""
 
     }
+ 
+}
+
+componentWillMount(){
+    if(this.props.avatarCode !== undefined)
+    {
+        this.buildSpriteProfile(this.props.avatarCode)
+    }
+}
+
+buildSpriteProfile = (avatarCode) => {
+    var spritePos = this.state.spritePos;
+    var avatarsCode = avatarCode.toString().split("",);
+
+    spritePos.bodyPos = avatarsCode[0];
+    spritePos.eyePos = avatarsCode[1];
+    spritePos.hairPos = avatarsCode[2];
+    spritePos.headPos = avatarsCode[3];
+    spritePos.facePos = avatarsCode[4];
+
+    this.setState({spritePos: spritePos})
+}
+
+
+componentDidMount(){
 }
 
 getSpriteProfile = () => {
@@ -76,6 +101,23 @@ MoveRight = (field) => {
 
 render()
 {
+    if(this.props.justProfile === true)
+    {
+        
+        return(
+            <div  >
+            <div id="character" >
+                <Spritesheet  style={{position: "absolute"}} ref={"bodyPos"} image={bodies} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.bodyPos} endAt={this.state.spritePos.bodyPos} autoplay={false} steps={6} fps={0} loop={false} />
+                <Spritesheet style={{position: "absolute"}} ref={"headPos"} image={heads} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.headPos} endAt={this.state.spritePos.headPos} autoplay={false} steps={6} fps={0} loop={false} />
+                <Spritesheet style={{position: "absolute"}} ref={"hairPos"} image={hair} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.hairPos} endAt={this.state.spritePos.hairPos} autoplay={false} steps={6} fps={0} loop={false} />
+                <Spritesheet style={{position: "absolute"}} ref={"eyePos"} image={eyes} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.eyePos} endAt={this.state.spritePos.eyePos} autoplay={false} steps={6} fps={0} loop={false} />
+                <Spritesheet style={{position: "absolute"}} ref={"facePos"}  image={faces} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.facePos} endAt={this.state.spritePos.facePos} autoplay={false} steps={6} fps={0} loop={false} />
+            </div>
+            </div>
+        )
+    }
+    else
+    {
     return(
        <div className="MainWindow">
         <div id="character" className="Main">
@@ -117,6 +159,7 @@ render()
         </div>
         </div>
     )
+    }
 }
 
 

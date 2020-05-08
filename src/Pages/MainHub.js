@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import {Col, Row} from 'reactstrap'
+import {LogoutButton} from '../Utilities/AuthService'
+import {checkForPlayer} from '../Utilities/ServerEndpoints'
 import Player from '../Player/Player'
 import Shop from '../Shops/Shop'
 import MissionBoard from '../Jobs/MissionBoard';
@@ -27,7 +29,7 @@ class MainHub extends Component {
             expLimit: 100,   
         },
 
-        player: [],
+        player: null,
         givenPoints: 10,
         data: null,
     }
@@ -36,32 +38,48 @@ class MainHub extends Component {
     }
 
     componentDidMount() {
-
-      
-    
+      var user = JSON.parse(localStorage.getItem('userDetail'))
+      if(user !== null)
+      {
+        checkForPlayer(user.id).then(response => {
+          this.setState({player: response.record})
+        }).catch(error => {
+        })
+      }
   };
+
+  getPlayerInfo(){
+
+  }
 
 
     render(){
 
-      
+      if(this.state.player === null)
+      {
+        return(<div>
+          Loading...
+        </div>)
+      }
+      else
+      {
         return(
-            <div>
-            <div>
-            <Player ref={this.playerRef} PlayerStats={this.state.PlayerStats}/>
+            <div style={{backgroundColor: "#282c24"}}>
+            <div className="PlayerBar">
+            <Player ref={this.playerRef} PlayerStats={this.state.player}/>
             </div>
-          <div>
-            <MissionBoard Player={this.playerRef}/>
-          </div>
-          <div>
+          <div className="MainMenu">  
+        
+          <MissionBoard Player={this.playerRef}/>
+          {/* <div>
             <Shop Player={this.playerRef}/>
+          </div> */}
+          <LogoutButton />
           </div>
-          {/* <Row>
-          <CharacterBuilder CreateCharacter={this.props.CreateCharacter}/>
-          </Row> */}
-
+        
           </div>
         )}
+    }
 }
 
 export default MainHub

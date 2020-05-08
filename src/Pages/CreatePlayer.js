@@ -3,7 +3,7 @@ import { Form, FormGroup, FormFeedback, Button, Input, Modal, ModalBody} from 'r
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CreateWindow from '../Images/BattleWindow.png'
 
-import {createPlayer, checkPlayerName} from '../Utilities/ServerEndpoints'
+import {createPlayer, checkPlayerName, checkForPlayer} from '../Utilities/ServerEndpoints'
 import CharacterBuilder from '../CharacterCreator/CharacterBuilder'
 
 
@@ -14,7 +14,6 @@ constructor(props){
  super(props)   
 
  
-console.log(props)
     this.state = {
         playerDetails: {
             name: "",
@@ -23,12 +22,29 @@ console.log(props)
             STM: 0,
             STL: 0,
             givenPoints: 10,
-            profileCode: null, 
+            profileCode: null,
+            userId: null, 
         },
         nameInvalid: false,
         pointsInvalid: false,
         modalOpen: false,
     }
+
+    const user = JSON.parse(localStorage.getItem('userDetail'));
+    if(user !== null)
+    {
+    checkForPlayer(user.id).then(response => {
+        if(response.response === "exists")
+        {
+            props.route.history.push("/login")
+        }   
+    }).catch(error => {
+    })
+    }
+}
+
+componentDidMount(){
+ 
 }
 
 onChange = (e) => {
@@ -98,7 +114,8 @@ setPointsInvalid = () => {
     }, 2000)
 }
 
-createNewPlayer = () => {
+createNewPlayer = (e) => {
+    e.preventDefault();
     var player = this.state.playerDetails
     if(player.givenPoints > 0)
     {
@@ -115,7 +132,11 @@ createNewPlayer = () => {
         {
 
             player.profileCode = this.refs.playerProfile.getSpriteProfile()
-           
+            const user = JSON.parse(localStorage.getItem('userDetail'));
+            if(user !== null)
+            {
+                player.userId = user.id
+            }
             createPlayer(player).then(response => {
                 if(response === "created")
                 {
@@ -170,7 +191,7 @@ render()
             <CharacterBuilder ref="playerProfile"/>
             </FormGroup>
             <FormGroup className="Playerinput">
-            Player Name: <Input invalid={this.state.nameInvalid} onChange={e => this.onChange(e)} type="playername" name="playername" id="playername" placeholder="Enter Player name"></Input>
+            Player Name: <Input invalid={this.state.nameInvalid} onChange={e => this.onChange(e)}  placeholder="Enter Player name"></Input>
             <FormFeedback>Name Exists</FormFeedback>
             </FormGroup>
             <FormGroup className="givePoints">
@@ -181,7 +202,7 @@ render()
             <div style={{display: "inline-flex"}}> STL {this.plusMinusRender("STL")} </div>
             </FormGroup>
             <FormGroup className="CreatePlayerSaveB" >
-            <div style={{transform: "translate(520px, -680px"}}><button invalid={true} style={{fontSize: 30}}   onClick={this.createNewPlayer} className="btn btn-primary">Save</button></div>
+            <div style={{transform: "translate(520px, -680px"}}><button invalid={true} style={{fontSize: 30}}   onClick={e => this.createNewPlayer(e)} className="btn btn-primary">Save</button></div>
             <div style={{transform: "translate(340px, -1010px)", display: this.displayError(), color: "red", fontSize: "25px"}} >Please use all points</div>
             </FormGroup>
         </Form>
@@ -189,7 +210,7 @@ render()
             <ModalBody >
               <div style={{transform: "translate(150px, 100px)", width: 700, fontSize: 35}}>  <p>Thank you for creating a profile! {this.state.playerDetails.name}</p>
                 Soon you will be able to use him! look out for a email when the feature becomes available 
-                <div style={{transform: "translate(600px, 100px)", fontSize: 30}}><Button style={{fontSize: 35}} onClick={() => this.props.history.push('/welcome')}>OK</Button></div> </div>
+                <div style={{transform: "translate(600px, 100px)", fontSize: 30}}><Button style={{fontSize: 35}} onClick={() => this.props.route.history.push('/welcome')}>OK</Button></div> </div>
             </ModalBody>
         </Modal>
         </div>

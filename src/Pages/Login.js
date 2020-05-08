@@ -8,7 +8,6 @@ class Login extends Component {
 
 constructor(props){
     super(props)
-    console.log(props)
     this.state ={
             email: '',
             password: '',
@@ -19,6 +18,17 @@ constructor(props){
             loginFail: false,
             errorMsg: ""
     }
+}
+
+componentDidMount(){
+  var user = JSON.parse(localStorage.getItem('userDetail'))
+  if(user !== null)
+  {
+    if(user.isLoggedIn === true)
+    {
+      this.props.route.history.push('/mainhub')
+    }
+  }
 }
 
 handleUserInput (e) {

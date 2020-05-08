@@ -1,3 +1,26 @@
+/* PlayerBar */
+.PlayerBar{
+    float: left;
+    background-image: url('../Images/Character_info.png');
+    background-repeat: no-repeat;
+    background-size: 24vw 100vh;
+
+    background-color: #282c34;
+    width: 24vw;
+    height: 100vh;
+    margin-left: -1.5vw;
+}
+
+/* MainMenu */
+.MainMenu{
+    background-color: #282c34;
+    padding-top: 10vh;
+    height: 100vh;
+}
+
+
+
+
 /* Desktop styles */
 .LoginWindow{
     background-color: #282c34;

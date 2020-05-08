@@ -7,15 +7,15 @@ import PlayerSneakAnimation from '../Images/shootinganimation_sneak.png';
 import BattleAnimationStart from '../Images/Shootinganimation_Start.png';
 import BattleWindowTemplate from '../Images/BattleWindow.png'
 import Spritesheet from 'react-responsive-spritesheet';
+import Enemy from './Enemy'
 import './MissionStyles.css'
 
 
 class Battle extends Component {
 
-constructor()
+constructor(props)
 {
-    super()
-
+    super(props)
     this.state = {
         player: {},
         enemies: [],
@@ -47,6 +47,7 @@ constructor()
 //NOTES FOR BATTLE JS, animation frames are currently locked to 15.
 
 componentDidMount(){
+    var enemy = new Enemy()
     this.setState({player: this.props.Player, enemies: this.props.Enemies})
     this.startBattle()
 }
@@ -190,13 +191,13 @@ fightPrompt = () => {
         <div className="battleMenu">
         {/* <img width={1025} height={628} src={BattleWindowTemplate}></img> */}
         <div className="typewriter">
-        <p>You Have {this.state.player.current.props.PlayerStats.ATK} Attack && {this.state.player.current.props.PlayerStats.HEALTH} Health </p>
+        <p>You Have {this.state.player.current.state.DamageAmounts.Melee} Attack && {this.state.player.current.props.PlayerStats.Health} Health </p>
         <p>Enemy Has {this.state.enemies[this.state.currentlyFightingId].EnemyStats.MeleeAttack} Attack && {this.state.enemies[this.state.currentlyFightingId].EnemyStats.Health} Health</p>
         </div>
         <div className="battleAnimations"><Spritesheet  ref="battleSprite" image={this.GetAnimation()} widthFrame={1024} heightFrame={512} startAt={1} endAt={15} steps={15} fps={6} autoPlay={false} loop={true} /></div>
         <div className="ButtonOptions">
-        <Button onClick={() => this.doDamage()}>Fight</Button>
-        <Button onClick={() => this.sneak()}>Sneak</Button>
+        {/* <Button onClick={() => this.doDamage()}>Fight</Button>
+        <Button onClick={() => this.sneak()}>Sneak</Button> */}
         <Button onClick={() => this.props.toggleModal()}>Cancel</Button>
         </div>
         </div>

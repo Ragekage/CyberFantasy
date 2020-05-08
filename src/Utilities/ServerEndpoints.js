@@ -54,13 +54,15 @@ export async function checkPlayerName(name){
 
 export async function checkForPlayer(id){
   var response = await axios.get('/checkforplayer/' + id).then(function(response) {
-    return response.data.response
+    return response.data
   }).catch(function(error) {
     return error
   })
 
   return response
 }
+
+
 
 export async function confirmCheck(confirmId){
   var response = axios.post('/confirmcheck', {
@@ -101,4 +103,67 @@ var response = await axios.post('/checkuser', {
     });
 
 return response
+}
+
+
+//MissionEndpoints
+
+export async function checkMissionForPlayer(playerId) {
+var response = await axios.get('/checkForMissions/' + playerId).then(response => {
+  return response.data
+}).catch(error => {
+  return error
+})
+return response
+}
+
+export async function createMission(postData) {
+  var response = await axios.post('/createMission', {postData}).then(response => {
+    return response
+  }).catch(error => {
+    console.log(error)
+    return error
+  })
+  return response
+}
+
+export async function updateMission(postData){
+  var response = await axios.post('/updateMission', {postData}).then(response => {
+    return response.data.response
+  }).catch(error => {
+    console.log(error)
+    return error
+  })
+  return response
+}
+
+export async function createEnemy(postData){
+  var response = await axios.post('/createEnemy', {postData}).then(response => {
+    return response
+  }).catch(error => {
+    console.log(error)
+    return error
+  })
+  return response
+}
+
+export async function deleteEnemy(missionId){
+  var response = await axios.get('/deleteEnemies/' + missionId).then(response => {
+    return response
+  }).catch(error => {
+    console.log(error)
+    return error
+  })
+  return response
+}
+
+export async function getEnemyByMissionId(missionId){
+  var response = await axios.get('/getEnemiesByMissionId/' + missionId).then(response => {
+    return response
+  }).catch(error => {
+    console.log(error)
+    return error
+  })
+
+  return response
 }
