@@ -167,3 +167,16 @@ export async function getEnemyByMissionId(missionId){
 
   return response
 }
+
+//PlayerEndpoints
+
+//Change this to patch.
+export async function updatePlayer(patchData){
+  var response = await axios.post('/updatePlayer', {patchData}).then(response => {
+    return response
+  }).catch(error => {
+    return error
+  })
+  
+  return response
+}

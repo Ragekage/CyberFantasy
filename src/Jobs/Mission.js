@@ -5,6 +5,8 @@ import Enemy from './Enemy';
 import Battle from './Battle';
 import MissionCardTemplate from '../Images/MissionCard.png'
 import {missionBuilder} from './missionBuilder'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
 Date.prototype.addHours = function(h){
     this.setHours(this.getHours()+h);
@@ -129,6 +131,7 @@ diffMinutes(time1, time2){
 }
 
 
+
 renderMissionInfo = (Mission) => {
 
     return(
@@ -139,6 +142,7 @@ renderMissionInfo = (Mission) => {
         <p> CashGain: {Mission.CASHGAIN}</p>
         <p> Exp: {Mission.EXPGAIN}</p>
         <p> Expires: {this.state.expiryTime} Mins</p>
+        <p> Enemies: {this.renderEnemies()}</p>
         {/* <Button onClick={() => this.props.Rebuild(this.props.Mission.MissionStats.Id, this.props.Player.current.props.PlayerStats.Id, this.props.ArrayId)}>rebuild</Button> */}
         <Button onClick={() => this.fight()}>Fight</Button>
         {/* <Button onClick={this.buildMission}>Refresh</Button> */}
@@ -150,9 +154,11 @@ renderMissionInfo = (Mission) => {
 renderEnemies = () => {
     if(this.state.Enemies.length > 0){
         return(
-            <div>
-                {this.state.Enemies[1]}
-            </div>
+            this.state.Enemies.map((enemy, id) => {
+                return(
+            <FontAwesomeIcon icon="male" />
+                )
+        })
         )
     }
 }

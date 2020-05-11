@@ -105,6 +105,7 @@ export const Auth = {
       if(currentDate > expiredDate)
       {
         Auth.isAuthenticated = false;
+        localStorage.removeItem('userDetail')
       }
       else
       {
