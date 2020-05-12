@@ -189,7 +189,7 @@ render()
         <img src={CreateWindow} width={1260} height={900}></img>
         <Form>
             <FormGroup className="Characterselect">
-            <CharacterBuilder ref="playerProfile"/>
+            <CharacterBuilder mobile={false} ref="playerProfile"/>
             </FormGroup>
             <FormGroup className="Playerinput">
             Player Name: <Input invalid={this.state.nameInvalid} onChange={e => this.onChange(e)}  placeholder="Enter Player name"></Input>

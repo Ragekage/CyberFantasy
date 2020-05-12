@@ -29,7 +29,7 @@ constructor(props)
             headPos: 1,
             facePos: 1,
         },
-        imageWidth: props.style.width,
+      
         testImage: ""
 
     }
