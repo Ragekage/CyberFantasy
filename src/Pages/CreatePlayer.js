@@ -28,6 +28,7 @@ constructor(props){
         nameInvalid: false,
         pointsInvalid: false,
         modalOpen: false,
+        charAccepted: false,
     }
 
     const user = JSON.parse(localStorage.getItem('userDetail'));
@@ -114,7 +115,7 @@ setPointsInvalid = () => {
     }, 2000)
 }
 
-createNewPlayer = (e) => {
+createNewPlayer = (e, mobile) => {
     e.preventDefault();
     var player = this.state.playerDetails
     if(player.givenPoints > 0)
@@ -141,7 +142,7 @@ createNewPlayer = (e) => {
                 if(response === "created")
                 {
                     this.toggleModal()
-                    this.setState({playerDetails: player})
+                    this.setState({playerDetails: player, charAccepted: true})
                 }
                 else
                 {
@@ -153,9 +154,9 @@ createNewPlayer = (e) => {
     }
 }
 
-plusMinusRender = (stat) => {
+plusMinusRender = (stat, mobile) => {
     return(
-        <div className="PlusMinus" style={{display: "flex"}}>
+        <div className={mobile === true ? "" : "PlusMinus"} style={{display: "flex", paddingLeft: "10px"}}>
         <div style={{marginRight: 5}} onClick={() => this.plusMinus(stat, "add")}>
             <FontAwesomeIcon icon="plus" />
         </div>
@@ -196,10 +197,10 @@ render()
             </FormGroup>
             <FormGroup className="givePoints">
             <div style={{marginLeft: 85}}>{this.state.playerDetails.givenPoints} Points</div>
-            <div style={{display: "inline-flex"}}> STR {this.plusMinusRender("STR")} </div>
-            <div style={{display: "inline-flex"}}> INT{this.plusMinusRender("INT")} </div>
-            <div style={{display: "inline-flex"}}> STM {this.plusMinusRender("STM")}</div>
-            <div style={{display: "inline-flex"}}> STL {this.plusMinusRender("STL")} </div>
+            <div style={{display: "inline-flex"}}> STR {this.plusMinusRender("STR", false)} </div>
+            <div style={{display: "inline-flex"}}> INT{this.plusMinusRender("INT", false)} </div>
+            <div style={{display: "inline-flex"}}> STM {this.plusMinusRender("STM", false)}</div>
+            <div style={{display: "inline-flex"}}> STL {this.plusMinusRender("STL", false)} </div>
             </FormGroup>
             <FormGroup className="CreatePlayerSaveB" >
             <div style={{transform: "translate(520px, -680px"}}><button invalid={true} style={{fontSize: 30}}   onClick={e => this.createNewPlayer(e)} className="btn btn-primary">Save</button></div>
@@ -218,9 +219,43 @@ render()
     }
     else
     {
+        if(this.state.charAccepted === false)
+        {
         return(
-            <div className="CreateCharacterMainM">Apologise the character creator is not currently available for mobile. :(</div>
+            <div className="CreateCharacterMainM">
+            <Form>
+            <FormGroup >
+            <CharacterBuilder mobile={true} style={{width: 5}} ref="playerProfile"/>
+            </FormGroup>
+            <FormGroup >
+            Player Name: <Input style={{width: "100vw"}} invalid={this.state.nameInvalid} onChange={e => this.onChange(e)}  placeholder="Enter Player name"></Input>
+            <FormFeedback>Name Exists</FormFeedback>
+            </FormGroup>
+            <FormGroup style={{textAlign: "center", marginLeft: "auto", marginRight: "auto", width: "42vw", fontSize: 30}}>
+            <div style={{display: "flex"}}>{this.state.playerDetails.givenPoints} Points</div>
+            <div style={{display: "flex"}}> STR  {this.plusMinusRender("STR", true)} </div>
+            <div style={{display: "flex"}}> INT  {this.plusMinusRender("INT", true)} </div>
+            <div style={{display: "flex"}}> STM  {this.plusMinusRender("STM", true)}</div>
+            <div style={{display: "flex"}}> STL  {this.plusMinusRender("STL", true)} </div>
+            </FormGroup>
+            <FormGroup>
+            <div style={{marginLeft: "auto", marginRight: "auto", width: "20vw"}} ><button invalid={true} style={{fontSize: 20}}   onClick={e => this.createNewPlayer(e)} className="btn btn-primary">Save</button></div>
+            <div style={{ display: this.displayError(), color: "red", fontSize: "25px", marginLeft: "20px", marginRight: "auto"}} >Please use all points</div>
+            </FormGroup>
+            </Form>
+            </div>
         )
+        }
+        else
+        {
+            return(
+                <div style={{color: "white", height: "100vh"}}>
+                     <div>  <p>Thank you for creating a profile! {this.state.playerDetails.name}</p>
+                        <p>Soon you will be able to use him! look out for a email when the feature becomes available</p>
+                <div style={{ fontSize: 25}}><Button style={{fontSize: 35}} onClick={() => this.props.route.history.push('/welcome')}>OK</Button></div> </div>
+                </div>
+            )
+        }
 
     }}
 

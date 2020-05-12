@@ -15,7 +15,7 @@ class CharacterBuilder extends Component {
 constructor(props)
 {
     super(props)
-
+    console.log(props)
     this.state = {
         bodyArray: [1,2,3,4,5,6],
         eyesArray: [1,2,3,4,5,6],
@@ -29,7 +29,7 @@ constructor(props)
             headPos: 1,
             facePos: 1,
         },
-
+        imageWidth: props.style.width,
         testImage: ""
 
     }
@@ -101,6 +101,8 @@ MoveRight = (field) => {
 
 render()
 {
+    if(this.props.mobile === false)
+    {
     if(this.props.justProfile === true)
     {
         
@@ -123,7 +125,7 @@ render()
         <div id="character" className="Main">
             <Spritesheet  style={{position: "absolute"}} ref={"bodyPos"} image={bodies} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.bodyPos} endAt={this.state.spritePos.bodyPos} steps={6} fps={6} loop={false} />
             <Spritesheet style={{position: "absolute"}} ref={"headPos"} image={heads} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.headPos} endAt={this.state.spritePos.headPos} steps={6} fps={6} loop={true} />
-            <Spritesheet style={{position: "absolute"}} ref={"hairPos"} image={hair} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.hairPos} endAt={this.state.spritePos.hairPos} steps={6} fps={6} loop={true} />
+            <Spritesheet style={{position: "absolute" }} ref={"hairPos"} image={hair} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.hairPos} endAt={this.state.spritePos.hairPos} steps={6} fps={6} loop={true} />
             <Spritesheet style={{position: "absolute"}} ref={"eyePos"} image={eyes} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.eyePos} endAt={this.state.spritePos.eyePos} steps={6} fps={6} loop={true} />
             <Spritesheet style={{position: "absolute"}} ref={"facePos"}  image={faces} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.facePos} endAt={this.state.spritePos.facePos} steps={6} fps={6} loop={true} />
         </div>
@@ -159,6 +161,69 @@ render()
         </div>
         </div>
     )
+    }
+    }
+    else
+    {
+        if(this.props.justProfile === true)
+        {
+            
+            return(
+                <div  >
+                <div id="character" >
+                    <Spritesheet  style={{position: "absolute", width: "100vw"}} ref={"bodyPos"} image={bodies} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.bodyPos} endAt={this.state.spritePos.bodyPos} autoplay={false} steps={6} fps={0} loop={false} />
+                    <Spritesheet style={{position: "absolute", width: "100vw"}} ref={"headPos"} image={heads} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.headPos} endAt={this.state.spritePos.headPos} autoplay={false} steps={6} fps={0} loop={false} />
+                    <Spritesheet style={{position: "absolute", width: "100vw"}} ref={"hairPos"} image={hair} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.hairPos} endAt={this.state.spritePos.hairPos} autoplay={false} steps={6} fps={0} loop={false} />
+                    <Spritesheet style={{position: "absolute", width: "100vw"}} ref={"eyePos"} image={eyes} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.eyePos} endAt={this.state.spritePos.eyePos} autoplay={false} steps={6} fps={0} loop={false} />
+                    <Spritesheet style={{position: "absolute", width: "100vw"}} ref={"facePos"}  image={faces} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.facePos} endAt={this.state.spritePos.facePos} autoplay={false} steps={6} fps={0} loop={false} />
+                </div>
+                </div>
+            )
+        }
+        else
+        {
+        return(
+           <div   className="MainWindowM">
+            <div id="character" className="MainM">
+                <Spritesheet  style={{position: "absolute", width: "100vw"}} ref={"bodyPos"} image={bodies} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.bodyPos} endAt={this.state.spritePos.bodyPos} steps={6} fps={6} loop={false} />
+                <Spritesheet style={{position: "absolute", width: "100vw"}} ref={"headPos"} image={heads} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.headPos} endAt={this.state.spritePos.headPos} steps={6} fps={6} loop={true} />
+                <Spritesheet style={{position: "absolute", width: "100vw" }} ref={"hairPos"} image={hair} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.hairPos} endAt={this.state.spritePos.hairPos} steps={6} fps={6} loop={true} />
+                <Spritesheet style={{position: "absolute", width: "100vw"}} ref={"eyePos"} image={eyes} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.eyePos} endAt={this.state.spritePos.eyePos} steps={6} fps={6} loop={true} />
+                <Spritesheet style={{position: "absolute", width: "100vw"}} ref={"facePos"}  image={faces} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.facePos} endAt={this.state.spritePos.facePos} steps={6} fps={6} loop={true} />
+            </div>
+            <div style={{fontSize: 25}}>
+    
+                <div>
+                <FontAwesomeIcon onClick={() => this.MoveLeft("bodyPos")} icon="chevron-left"/>
+                Body {this.state.spritePos.bodyPos}
+                <FontAwesomeIcon onClick={() => this.MoveRight("bodyPos")} icon="chevron-right"/>
+                </div>
+                <div>
+                <FontAwesomeIcon onClick={() => this.MoveLeft("eyePos")} icon="chevron-left"/>
+                Eye {this.state.spritePos.eyePos}
+                <FontAwesomeIcon onClick={() => this.MoveRight("eyePos")} icon="chevron-right"/>
+                </div>
+                <div>
+                <FontAwesomeIcon onClick={() => this.MoveLeft("hairPos")} icon="chevron-left"/>
+                Hair {this.state.spritePos.hairPos}
+                <FontAwesomeIcon onClick={() => this.MoveRight("hairPos")} icon="chevron-right"/>
+                </div>
+                <div>
+                <FontAwesomeIcon onClick={() => this.MoveLeft("headPos")} icon="chevron-left"/>
+                Head {this.state.spritePos.headPos}
+                <FontAwesomeIcon onClick={() => this.MoveRight("headPos")} icon="chevron-right"/>
+                </div>
+                <div>
+                <FontAwesomeIcon onClick={() => this.MoveLeft("facePos")} icon="chevron-left"/>
+                Face {this.state.spritePos.facePos}
+                <FontAwesomeIcon  onClick={() => this.MoveRight("facePos")} icon="chevron-right"/>
+                </div>
+               
+              
+            </div>
+            </div>
+        )
+        }
     }
 }
 

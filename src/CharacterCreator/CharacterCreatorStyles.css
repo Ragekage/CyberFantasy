@@ -16,3 +16,21 @@
     background-color: rgb(27, 31, 49);
 }
 
+.MainM{
+    position: relative;
+    width: 100vw;
+    height: 46.5vh;
+    background-color: rgb(50, 57, 94);
+    text-align: center;
+}
+
+.MainWindowM{
+    border: 2px solid rgb(50, 57, 94);
+    border-radius: 5px;
+    width: 100vw;
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    background-color: rgb(27, 31, 49);
+}
+
