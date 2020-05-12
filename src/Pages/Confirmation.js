@@ -89,6 +89,7 @@ render(){
             return(
                 <div className="ConfirmationMainM">
                     Email Has Been Confirmed
+                <Link style={{ fontSize: 25}} to="/welcome" className="btn btn-primary">Ok</Link>
                 </div>
             )
         }
