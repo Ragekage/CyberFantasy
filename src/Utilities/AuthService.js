@@ -67,7 +67,8 @@ export function LoginButton( props) {
     );
   }
 
-  export function LogoutButton(){
+  export function LogoutButton(Mobile){
+
     let history = useHistory();
     let location = useLocation();
     let { from } = location.state || { from: { pathname: "/welcome" } };
@@ -76,8 +77,19 @@ export function LoginButton( props) {
       history.replace(from)
     }
 
+    let styleMobile = () => {
+      if(Mobile.isMobile === true)
+      {
+        return {height: "100vh"}
+      }
+      else
+      {
+        return {height: "50px", width: "120px", backgroundColor: "#282c34", transform: "translate(1750px, -70px)"}
+      }
+    }
+
     return (
-      <div style={{height: "50px", width: "120px", backgroundColor: "#282c34", transform: "translate(1750px, -70px)"}}>
+      <div style={styleMobile()}>
           <Button  onClick={() => logout()} color="primary">Sign Out</Button>
       </div>
     );

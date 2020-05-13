@@ -87,7 +87,7 @@ class MainHub extends Component {
     {
       return(<div style={{color: "white"}}>
         Sorry Not Currently Available On Mobile
-        <LogoutButton/>
+        <LogoutButton isMobile={true}/>
       </div>)
     }
   }
