@@ -107,7 +107,7 @@ render()
     {
         
         return(
-            <div  >
+            <div  className="Main">
             <div id="character" >
                 <Spritesheet  style={{position: "absolute"}} ref={"bodyPos"} image={bodies} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.bodyPos} endAt={this.state.spritePos.bodyPos} autoplay={false} steps={6} fps={0} loop={false} />
                 <Spritesheet style={{position: "absolute"}} ref={"headPos"} image={heads} widthFrame={512} heightFrame={512} startAt={this.state.spritePos.headPos} endAt={this.state.spritePos.headPos} autoplay={false} steps={6} fps={0} loop={false} />
