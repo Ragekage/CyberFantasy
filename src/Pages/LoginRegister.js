@@ -8,7 +8,9 @@ import MainMenupic from '../Images/CyberSunsetAnimated.png'
 import MMPic from '../Images/CyberSunsetBGNEW.gif'
 import MainMenuSound from '../Sounds/keys-of-moon-eclipse.mp3'
 
+
 class LoginRegister extends Component {
+
 
     constructor(props)
     {
