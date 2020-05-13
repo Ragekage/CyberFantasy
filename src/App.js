@@ -3,6 +3,7 @@ import './App.css';
 import Login from './Pages/Login'
 import Register from './Pages/Register'
 import MainHub from './Pages/MainHub'
+import Casino from './Casino/Casino'
 import Confirmation from './Pages/Confirmation'
 import LoginRegister from './Pages/LoginRegister'
 import CreatePlayer from './Pages/CreatePlayer'
@@ -45,7 +46,7 @@ const FullMediaQuery = {
         <Route path="/register"  render={(render) => (<Register route={render} FullMediaQuery={FullMediaQuery}/>)}/>
         <Route path="/confirmation/:confirmId" render={(render) => (<Confirmation route={render} FullMediaQuery={FullMediaQuery}/>)} />
         <Route path="/createplayer" render={(render) => (<CreatePlayer route={render} FullMediaQuery={FullMediaQuery}/>)}/>
-
+        <Route path="/casino" render={(render) => (<Casino route={render} FullMediaQuery={FullMediaQuery}/>)}/>
         <PrivateRoute path="/mainhub">
           <MainHub FullMediaQuery={FullMediaQuery}/>
 
