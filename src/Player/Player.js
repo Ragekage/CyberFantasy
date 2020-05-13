@@ -181,13 +181,13 @@ checkForLevelUp = () => {
 }
 
 render(){
-  this.checkForLevelUp()
+//   this.checkForLevelUp()
   if(this.state.PlayerStats !== undefined)
   {
     return(
         <div className="InfoTemplate">
         <div className="CImage"> 
-        <div style={{position: "relative", transform: "scale(0.55)", }}><CharacterBuilder avatarCode={this.state.PlayerStats.AvatarCode}  justProfile={true}/></div>
+        <div style={{position: "relative", transform: "scale(0.15)", marginRight: 230 }}><CharacterBuilder avatarCode={this.state.PlayerStats.AvatarCode}  justProfile={true}/></div>
         {/* <Spritesheet style={{height: 240, width: 240}} image={characterImage} widthFrame={512} heightFrame={512} steps={3} fps={12} loop={true} /> */}
         <div style={{color: "white", transform: "translate(0px, 290px)", fontSize: 20}}>{this.state.PlayerStats.Name}</div>
         </div>

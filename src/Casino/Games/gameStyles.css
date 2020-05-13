@@ -1,0 +1,92 @@
+.BlackJackGameWindow{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    margin-top: 20vh;
+    color: white;
+    width: 30%;
+    height: 40%;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+.BlackJackGameWindowM{
+    transform: scale(0.9);
+    margin-left: -20px;
+    color: white;
+}
+
+.BlackJackGameBoard{
+text-align: center;
+
+}
+
+.BlackJackStartMenu{
+    display: grid;
+    text-align: center;
+    margin-top: 15vh;
+}
+
+.BlackJackLost{
+    text-align: center;
+    display: grid;
+}
+
+.BlackJackWin{
+    text-align: center;
+    display: grid;
+}
+
+.BlackJackPlayingCard{
+    width: 100px;
+    height: 110px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    border: 2px solid gray;
+    background-color: azure;
+    color: red;
+    border-radius: 5px;
+}
+
+.BlackJackCardsPlayer{
+
+    display: flex;
+}
+
+.BlackJackCardsDealer{
+    display: flex;
+}
+
+.BlackJackPlayingCardTop{
+    display: flex;
+}
+
+.BlackJackPlayingCardTopL{
+    display: inline-grid;
+    margin-left: 3px;
+}
+
+.BlackJackPlayingCardTopR{
+    display: inline-grid;
+    margin-left: 48px;
+}
+
+.BlackJackPlayingCardBottom{
+    display: flex;
+    transform: scale(1, -1);
+}
+
+.BlackJackPlayingCardBottomL{
+    display: inline-grid;
+    margin-left: 3px;
+}
+
+.BlackJackPlayingCardBottomR{
+    display: inline-grid;
+    margin-left: 48px;
+}
+
+.BlackJackCardSpacer{
+    height: 20px;
+}
