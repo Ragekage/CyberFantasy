@@ -152,9 +152,9 @@ DrawCard(){
         console.log(deck[cardNo])
         cardNo = cardNo + 1
     }
-    this.setState({cardNo: cardNo, buttonTimeOut: true})
+    this.setState({cardNo: cardNo})
 
-    
+    this.buttonTimeOutF()
     this.CalculateHand(playerHand)
 
 }
@@ -344,7 +344,7 @@ BuildDeck(){
     }
 
 dealerTurn(){
-
+this.setState({buttonTimeOut: true})
 var int = setInterval(() => {
     if(this.state.finalScreen === true)
     {
@@ -372,7 +372,7 @@ startGame = () => {
     this.DrawDealerCard()
     setTimeout(() => {
     this.DrawCard()
-    this.setState({gameStart: true})
+    this.setState({gameStart: true, buttonTimeOut: false})
 },200)
 }
 
@@ -451,13 +451,15 @@ displayPlayerHand = () => {
 
 }
 
+buttonTimeOutF(){
+    this.setState({buttonTimeOut: true})
+    setTimeout(() => {
+        this.setState({buttonTimeOut: false})
+    },500 )
+}
+
 displayGameBoard = () => {
-    if(this.state.buttonTimeOut === true)
-    {
-        setTimeout(() => {
-            this.setState({buttonTimeOut: false})
-        },500 )
-    }
+  
     if(this.state.finalScreen === false)
     {
     if(this.state.gameStart === true){
