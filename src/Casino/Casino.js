@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import BlackJack from './Games/BlackJack';
 import SlotMachine from './Games/SlotMachine';
 import {Button} from 'reactstrap';
+import {Link} from 'react-router-dom';
+
 import './casinoStyle.css'
 
 class Casino extends Component {
@@ -34,6 +36,7 @@ GameSelection(game){
         return (<div>
             <Button onClick={() => this.SelectGame("BlackJack")}>BlackJack</Button>
             <Button onClick={() => this.SelectGame("SlotMachine")}>Slots</Button>
+            <div className="CancelBtnM"><Link  to="/welcome" className="btn btn-primary">Back</Link></div>
         </div>)
     }
 }
