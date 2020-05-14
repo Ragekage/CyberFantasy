@@ -520,6 +520,7 @@ render()
     return(
         <div className="BlackJackGameWindow">
         {this.displayGameBoard()}
+        <Button style={{marginTop: 10}} onClick={() => this.props.goBack("Main")}>Go Back</Button>
         </div>
     )
     }
@@ -528,6 +529,7 @@ render()
         return(
             <div className="BlackJackGameWindowM">
             {this.displayGameBoard()}
+            <Button style={{marginTop: 10}} onClick={() => this.props.goBack("Main")}>Go Back</Button>
         </div>
         )
     }

@@ -1,3 +1,5 @@
+/*BlackJack Styles*/
+
 .BlackJackGameWindow{
     margin-left: auto;
     margin-right: auto;
@@ -89,4 +91,42 @@ text-align: center;
 
 .BlackJackCardSpacer{
     height: 20px;
+}
+
+/*SlotMachine Styles*/
+
+.SlotMachineReels{
+ width: 29.3%;
+ height: 100%;
+}
+
+.SlotMachineReelDivider{
+    margin-left: 40px;
+}
+
+.SlotMachineGameWindow{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    margin-top: 20vh;
+    color: white;
+    width: 35%;
+    height: 50%;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+.SlotMachineReelsWindow{
+    height: 40vh;
+}
+
+/*SlotMachine Mobile Styles*/
+
+.SlotMachineGameWindowM{
+    width: 100vw;
+}
+
+.SlotMachineReelsWindowM{
+    width: 90vw;
+    height: 50vh;
 }
