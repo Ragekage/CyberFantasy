@@ -1,0 +1,18 @@
+.boardRow{
+    border: 1px solid black;
+
+}
+
+.boardCell{
+ border: 1px solid black;
+ width: 80px;
+ height: 80px;
+ font-size: 40px;
+ padding-top: 10px;
+ text-align: center;
+ vertical-align: middle;
+}
+
+.board{
+    display: flex;
+}

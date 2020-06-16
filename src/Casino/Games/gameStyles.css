@@ -111,13 +111,13 @@ text-align: center;
     margin-top: 20vh;
     color: white;
     width: 35%;
-    height: 50%;
+    height: 60%;
     border: 2px solid white;
     border-radius: 5px;
 }
 
 .SlotMachineReelsWindow{
-    height: 40vh;
+    height: 50vh;
 }
 
 /*SlotMachine Mobile Styles*/
@@ -129,4 +129,47 @@ text-align: center;
 .SlotMachineReelsWindowM{
     width: 90vw;
     height: 50vh;
+}
+
+/*Roulette Styles*/
+
+.RouletteGameWindow{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    margin-top: 10vh;
+    color: white;
+    width: 55%;
+    height: 65%;
+    border: 2px solid white;
+    border-radius: 5px;
+
+}
+
+
+.CellBoard{
+    display: grid;
+    width: 9vw;
+    grid-template-columns: 70px 70px 70px ;
+}
+
+.CellSelect{
+    width: 70px;
+    height: 40px;
+    font-size: 20px;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.Chip{
+    background-size: 50px 50px;
+    background-position: 0px 0px;
+    padding-top: 10px;
+    height: 50px;
+    width: 50px;
+    color: black;
+    z-index: 100;
+    text-align: center;
+    background-repeat: no-repeat;
+    transform: translate(10px, -35px);
 }
