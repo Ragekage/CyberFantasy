@@ -9,6 +9,7 @@ import LoginRegister from './Pages/LoginRegister'
 import CreatePlayer from './Pages/CreatePlayer'
 import {PrivateRoute} from './Utilities/AuthService'
 import {useMediaQuery} from 'react-responsive'
+import WebcamTest from './Pages/WebcamTest'
 
 import {BrowserRouter as Router, Redirect, Switch, Route, useHistory} from "react-router-dom";
 
@@ -42,7 +43,7 @@ const FullMediaQuery = {
         <Route path="/welcome" render={() => <LoginRegister FullMediaQuery={FullMediaQuery}/>}/>
      
         <Route path="/login" render={(render) => (<Login route={render} FullMediaQuery={FullMediaQuery}/>)}/>
-        
+        <Route path="/webcamtest" render={(render) => (<WebcamTest route={render} FullMediaQuery={FullMediaQuery}/>)}/>
         <Route path="/register"  render={(render) => (<Register route={render} FullMediaQuery={FullMediaQuery}/>)}/>
         <Route path="/confirmation/:confirmId" render={(render) => (<Confirmation route={render} FullMediaQuery={FullMediaQuery}/>)} />
         <Route path="/createplayer" render={(render) => (<CreatePlayer route={render} FullMediaQuery={FullMediaQuery}/>)}/>
