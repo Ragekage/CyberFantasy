@@ -16,7 +16,7 @@ render()
     };
 
     return(
-        <div>
+        <div style={{height: "100%", width: "100%"}}>
         <Webcam
         audio={false}
         height={720}
