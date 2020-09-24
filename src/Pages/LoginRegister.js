@@ -54,6 +54,7 @@ class LoginRegister extends Component {
                         <div className="divider"/>
                         <Link style={{fontSize: 30}} to="/register" className="btn btn-primary">Register</Link>
                         <Link style={{fontSize: 30, marginLeft: 70, marginTop: 10}} to="/casino" className="btn btn-primary">Casino</Link>
+                        <Link style={{fontSize: 30, marginLeft: 5, marginTop: 5}} to="/webcamtest" className="btn btn-primary">WebCamTest</Link>
                 </div>
                 <div className="Audiodiv"><audio className="mainAudio" controls loop src={MainMenuSound} autoPlay></audio></div>
             </div>
@@ -72,6 +73,7 @@ class LoginRegister extends Component {
                 <Link style={{fontSize: 30}} to="/register" className="btn btn-primary">Register</Link>
                         <div className="divider"/>
                 <Link style={{fontSize: 30, marginLeft: 5, marginTop: 5}} to="/casino" className="btn btn-primary">Casino</Link>
+                <Link style={{fontSize: 30, marginLeft: 5, marginTop: 5}} to="/webcamtest" className="btn btn-primary">WebCamTest</Link>
                 </div>    
                 </div>
             )
